@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="数据持久化保存——归档"/>
+
+
+
+
+  <meta name="keywords" content="数据持久化保存, HunterMz's  Blog" />
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="HunterMz's  Blog">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.4.x" />
+
+
+
+<link rel="canonical" href="http://huntermz.site/2016/07/07/归档/"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.4.x" />
+
+
+
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+    <title> 数据持久化保存——归档 - HunterMz's  Blog </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">HunterMz's  Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            Home
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            Archives
+          
+        </li>
+      </a>
+    
+      <a href="/tags">
+        <li class="mobile-menu-item">
+          
+          
+            tags
+          
+        </li>
+      </a>
+    
+      <a href="/categories">
+        <li class="mobile-menu-item">
+          
+          
+            categories
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">HunterMz's  Blog</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            
+            
+              标签
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/categories">
+            
+            
+              分类
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          数据持久化保存——归档
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2016-07-07
+        </span>
+        
+          <div class="post-category">
+            
+              <a href="/categories/iOS开发/">iOS开发</a>
+            
+          </div>
+        
+      </div>
+    </header>
+
+    
+    
+
+    <div class="post-content">
+      
+        <ul>
+<li>首先在使用归档前，要对归档的对象进行编码和解码，代码如下：</li>
+</ul>
+<p>Person.h 文件</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">&lt;Foundation/Foundation.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="comment">// 如果想将一个自定义对象保存到文件中必须实现NSCoding协议</span></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Person</span> : <span class="title">NSObject</span>&lt;<span class="title">NSCoding</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">//姓名</span></div><div class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">copy</span>)<span class="built_in">NSString</span> *name;</div><div class="line"><span class="comment">//年龄</span></div><div class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">assign</span>)<span class="keyword">int</span> age;</div><div class="line"><span class="comment">//身高</span></div><div class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">assign</span>)<span class="keyword">double</span> height;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>Person.m 文件</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">"Person.h"</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">Person</span></span></div><div class="line"></div><div class="line"> <span class="comment">// 当将一个自定义对象保存到文件的时候就会调用该方法</span></div><div class="line"> <span class="comment">// 在该方法中说明如何存储自定义对象的属性</span></div><div class="line"> <span class="comment">// 也就说在该方法中说清楚存储自定义对象的哪些属性</span></div><div class="line"> -(<span class="keyword">void</span>)encodeWithCoder:(<span class="built_in">NSCoder</span> *)aCoder</div><div class="line"> &#123;</div><div class="line">     <span class="built_in">NSLog</span>(<span class="string">@"调用了encodeWithCoder:方法"</span>);</div><div class="line">     [aCoder encodeObject:<span class="keyword">self</span>.name forKey:<span class="string">@"name"</span>];</div><div class="line">     [aCoder encodeInteger:<span class="keyword">self</span>.age forKey:<span class="string">@"age"</span>];</div><div class="line">     [aCoder encodeDouble:<span class="keyword">self</span>.height forKey:<span class="string">@"height"</span>];</div><div class="line"> &#125;</div><div class="line"></div><div class="line"></div><div class="line"> <span class="comment">// 当从文件中读取一个对象的时候就会调用该方法</span></div><div class="line"> <span class="comment">// 在该方法中说明如何读取保存在文件中的对象</span></div><div class="line"> <span class="comment">// 也就是说在该方法中说清楚怎么读取文件中的对象</span></div><div class="line"> -(<span class="keyword">id</span>)initWithCoder:(<span class="built_in">NSCoder</span> *)aDecoder</div><div class="line"> &#123;</div><div class="line">     <span class="built_in">NSLog</span>(<span class="string">@"调用了initWithCoder:方法"</span>);</div><div class="line">     <span class="comment">//注意：在构造方法中需要先初始化父类的方法</span></div><div class="line">     <span class="keyword">if</span> (<span class="keyword">self</span>=[<span class="keyword">super</span> init]) &#123;</div><div class="line">         <span class="keyword">self</span>.name=[aDecoder decodeObjectForKey:<span class="string">@"name"</span>];</div><div class="line">         <span class="keyword">self</span>.age=[aDecoder decodeIntegerForKey:<span class="string">@"age"</span>];</div><div class="line">         <span class="keyword">self</span>.height=[aDecoder decodeDoubleForKey:<span class="string">@"height"</span>];</div><div class="line">     &#125;</div><div class="line">     <span class="keyword">return</span> <span class="keyword">self</span>;</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> <span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<ul>
+<li>归档过程</li>
+</ul>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 1.创建对象</span></div><div class="line">Person *p=[[Person alloc]init];</div><div class="line">p.name=<span class="string">@"Hunter"</span>;</div><div class="line">p.age=<span class="number">23</span>;</div><div class="line">p.height=<span class="number">1.7</span>;</div><div class="line"></div><div class="line"><span class="comment">// 2.获取文件路径</span></div><div class="line"><span class="built_in">NSString</span> *docPath=[<span class="built_in">NSSearchPathForDirectoriesInDomains</span>(<span class="built_in">NSDocumentDirectory</span>, <span class="built_in">NSUserDomainMask</span>, <span class="literal">YES</span>)lastObject];</div><div class="line"><span class="built_in">NSString</span> *path=[docPath stringByAppendingPathComponent:<span class="string">@"person.file"</span>];</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"path=%@"</span>,path);</div><div class="line"></div><div class="line"><span class="comment">// 3.将自定义的对象保存到文件中</span></div><div class="line">[<span class="built_in">NSKeyedArchiver</span> archiveRootObject:p toFile:path];</div></pre></td></tr></table></figure>
+<ul>
+<li>解档过程</li>
+</ul>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 1.获取文件路径</span></div><div class="line"><span class="built_in">NSString</span> *docPath=[<span class="built_in">NSSearchPathForDirectoriesInDomains</span>(<span class="built_in">NSDocumentDirectory</span>, <span class="built_in">NSUserDomainMask</span>, <span class="literal">YES</span>)lastObject];</div><div class="line"><span class="built_in">NSString</span> *path=[docPath stringByAppendingPathComponent:<span class="string">@"person.yangyang"</span>];</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"path=%@"</span>,path);</div><div class="line"></div><div class="line"><span class="comment">//2.从文件中读取对象</span></div><div class="line">Person *p=[<span class="built_in">NSKeyedUnarchiver</span> unarchiveObjectWithFile:path];</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"%@,%d,%.1f"</span>,p.name,p.age,p.height);</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+      
+      
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/数据持久化保存/">数据持久化保存</a>
+            
+          </div>
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2016/07/07/多线程和多任务/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">多线程和多任务</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2016/07/07/算法/">
+        <span class="next-text nav-default">排序算法</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:hunter_mz@icloud.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+      
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2015 - 
+    
+    2017
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">HunterMz</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://huntermz.site/2016/07/07/归档/';
+        this.page.identifier = '2016/07/07/归档/';
+        this.page.title = '数据持久化保存——归档';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//huntermz.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.4.x"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.4.x"></script>
+
+  </body>
+</html>

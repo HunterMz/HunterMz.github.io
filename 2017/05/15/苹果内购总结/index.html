@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="苹果内购总结"/>
+
+
+
+
+  <meta name="keywords" content="笔记, HunterMz's  Blog" />
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="HunterMz's  Blog">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.4.x" />
+
+
+
+<link rel="canonical" href="http://huntermz.site/2017/05/15/苹果内购总结/"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.4.x" />
+
+
+
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+    <title> 苹果内购总结 - HunterMz's  Blog </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">HunterMz's  Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            Home
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            Archives
+          
+        </li>
+      </a>
+    
+      <a href="/tags">
+        <li class="mobile-menu-item">
+          
+          
+            tags
+          
+        </li>
+      </a>
+    
+      <a href="/categories">
+        <li class="mobile-menu-item">
+          
+          
+            categories
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">HunterMz's  Blog</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            
+            
+              标签
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/categories">
+            
+            
+              分类
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          苹果内购总结
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2017-05-15
+        </span>
+        
+          <div class="post-category">
+            
+              <a href="/categories/iOS开发/">iOS开发</a>
+            
+          </div>
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#内购流程"><span class="toc-text">内购流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#在iTunes-Connect上创建和配置产品"><span class="toc-text">在iTunes Connect上创建和配置产品</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取产品信息"><span class="toc-text">获取产品信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#支付请求"><span class="toc-text">支付请求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#等待并处理支付结果"><span class="toc-text">等待并处理支付结果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#验证收据并发货"><span class="toc-text">验证收据并发货</span></a></li></ol></li></ol>
+    </div>
+  </div>
+
+
+    <div class="post-content">
+      
+        <h2 id="内购流程"><a href="#内购流程" class="headerlink" title="内购流程"></a>内购流程</h2><h3 id="在iTunes-Connect上创建和配置产品"><a href="#在iTunes-Connect上创建和配置产品" class="headerlink" title="在iTunes Connect上创建和配置产品"></a>在iTunes Connect上创建和配置产品</h3><ul>
+<li>只能创建虚拟商品。</li>
+<li>一个商品对应一个商品id(productIdentifier)，一旦创建成功不能修改，如果写错需删除此商品重新创建，并且此商品id作废。</li>
+<li>商品分<code>消耗型</code>、<code>非消耗型</code>、<code>自动再生订阅</code> 和 <code>非自动再生订阅</code>。<ul>
+<li><code>消耗型</code>： 使用完之后不可恢复。</li>
+<li><code>非消耗型</code>： 永久有效，只要是同一个Apple ID 换个设备可以免费恢复。</li>
+<li><code>自动再生订阅</code>： 在用户设备上也是永久可用，但是有过期时间。在订阅期内可以访问内容，快要到期时，系统会以用户的名义续订。</li>
+<li><code>非自动订阅</code>：订阅内容在所有用户的设备都可用，可以恢复。系统不会自动续订<a id="more"></a>
+<h3 id="获取产品信息"><a href="#获取产品信息" class="headerlink" title="获取产品信息"></a>获取产品信息</h3></li>
+</ul>
+</li>
+<li>获取一个产品识别码列表：<ul>
+<li>如果应用程序有一个固定的产品列表，可以把商品id列表保存在本地。</li>
+<li>如果商品列表不需要应用程序更新就可以做改变，可以通过服务器返回。</li>
+</ul>
+</li>
+<li><p>验证商品列表的有效性：为了确保用户看到的产品是真实可买，在显示应用的商店 UI 之前查询应用商店，确保显示的商品都是有效的。</p>
+  <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)validateProductIdentifiers:(<span class="built_in">NSArray</span> *)productIdentifiers</div><div class="line">&#123;</div><div class="line">    <span class="built_in">SKProductsRequest</span> *productsRequest = [[<span class="built_in">SKProductsRequest</span> alloc]</div><div class="line">       	initWithProductIdentifiers:[<span class="built_in">NSSet</span> setWithArray:productIdentifiers]];</div><div class="line">    productsRequest.delegate = <span class="keyword">self</span>;</div><div class="line">    [productsRequest start];</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// SKProductsRequestDelegate protocol method</span></div><div class="line">- (<span class="keyword">void</span>)productsRequest:(<span class="built_in">SKProductsRequest</span> *)request</div><div class="line">    didReceiveResponse:(<span class="built_in">SKProductsResponse</span> *)response</div><div class="line">&#123;</div><div class="line">    <span class="keyword">self</span>.products = response.products;</div><div class="line"></div><div class="line">    <span class="keyword">for</span> (<span class="built_in">NSString</span> *invalidIdentifier <span class="keyword">in</span> response.invalidProductIdentifiers) &#123;</div><div class="line">         <span class="comment">// Handle any invalid product identifiers.</span></div><div class="line">    &#125;</div><div class="line">    [<span class="keyword">self</span> displayStoreUI]; <span class="comment">// Custom method</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>呈现应用商店UI</p>
+<ul>
+<li>只在用户可以支付时显示一个商店。 调用 <code>SKPaymentQueue</code> 类 的 <code>canMakePayments</code> 方法来确认用户是否可以支付。 如果用户不能支付(比如，父母限制), 可以显示 UI 表明一个商店不可用，或者完全忽略商店部分。</li>
+<li>使用应用商店返回的语言环境(locale)和货币清楚地显示价格，不要尝试在你的 UI 中把价格转换为一个不同的货币。</li>
+</ul>
+</li>
+<li>测试购买<ul>
+<li>在iTunes Connect上添加测试账号，测试账号的邮箱不需要真实存在。</li>
+<li>不要用你的测试用户账号登陆产品环境，否则测试用户账号将无效不能再使用。</li>
+</ul>
+</li>
+</ul>
+<h3 id="支付请求"><a href="#支付请求" class="headerlink" title="支付请求"></a>支付请求</h3><ul>
+<li><p>创建支付请求<br>  当用户选择了一个要买的产品后，使用一个产品对象创建一个支付请求，并根据需要设置好购买数量。</p>
+  <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">SKProduct</span> *product = &lt;<span class="meta"># Product returned by a products request #&gt;;</span></div><div class="line"> <span class="built_in">SKMutablePayment</span> *payment = [<span class="built_in">SKMutablePayment</span> paymentWithProduct:product];</div><div class="line"> payment.quantity = <span class="number">2</span>;</div></pre></td></tr></table></figure>
+</li>
+<li><p>检测异常订单<br>App Store 用一个 <code>异常活动检测引擎</code> 来检测异常的用户行为，应用程序可以提供额外信息来提高该殷勤的性能。具体就是提供一个和用户想关联的 <code>账号</code>，在发起支付请求时赋值给 <code>applicationUsername</code>，而且要保证这个 <code>账号</code>，是一个不透明的识别码，苹果推荐使用 <code>单向散列方式</code> 填写。</p>
+  <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">	<span class="comment">// Custom method to calculate the SHA-256 hash using Common Crypto</span></div><div class="line">- (<span class="built_in">NSString</span> *)hashedValueForAccountName:(<span class="built_in">NSString</span>*)userAccountName</div><div class="line">&#123;</div><div class="line">    <span class="keyword">const</span> <span class="keyword">int</span> HASH_SIZE = <span class="number">32</span>;</div><div class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> hashedChars[HASH_SIZE];</div><div class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *accountName = [userAccountName UTF8String];</div><div class="line">    size_t accountNameLen = strlen(accountName);</div><div class="line"></div><div class="line">    <span class="comment">// Confirm that the length of the user name is small enough</span></div><div class="line">    <span class="comment">// to be recast when calling the hash function.</span></div><div class="line">    <span class="keyword">if</span> (accountNameLen &gt; <span class="built_in">UINT32_MAX</span>) &#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"Account name too long to hash: %@"</span>, userAccountName);</div><div class="line">        <span class="keyword">return</span> <span class="literal">nil</span>;</div><div class="line">    &#125;</div><div class="line">    CC_SHA256(accountName, (CC_LONG)accountNameLen, hashedChars);</div><div class="line"></div><div class="line">    <span class="comment">// Convert the array of bytes into a string showing its hex representation.</span></div><div class="line">    <span class="built_in">NSMutableString</span> *userAccountHash = [[<span class="built_in">NSMutableString</span> alloc] init];</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; HASH_SIZE; i++) &#123;</div><div class="line">        <span class="comment">// Add a dash every four bytes, for readability.</span></div><div class="line">        <span class="keyword">if</span> (i != <span class="number">0</span> &amp;&amp; i%<span class="number">4</span> == <span class="number">0</span>) &#123;</div><div class="line">            [userAccountHash appendString:<span class="string">@"-"</span>];</div><div class="line">        &#125;</div><div class="line">        [userAccountHash appendFormat:<span class="string">@"%02x"</span>, hashedChars[i]];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> userAccountHash;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<pre><code>&gt; 注意:
+&gt; `applicationUsername` 并不可靠。正常情况下在创建支付请求是将 `账号` 传给苹果，支付完成后在收据里也可以获取该值。但在使用过程偶现收据中的`applicationUsername` 为空。
+</code></pre><ul>
+<li><p>提交支付请求</p>
+  <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[[<span class="built_in">SKPaymentQueue</span> defaultQueue] addPayment:payment];</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="等待并处理支付结果"><a href="#等待并处理支付结果" class="headerlink" title="等待并处理支付结果"></a>等待并处理支付结果</h3><p>当交易状态改变时，比如一个支付请求成功了，Store Kit 会调用 交易队列观察者。因此需要指定一个类作为观察者。大部分情况需要创建一个单独的类来处理改观察者逻辑，少数情况下可以在应用委托中处理所有的商店 Kit 逻辑，包括观察交易队列。不管哪种情况，观察者必须遵循 <code>SKPaymentTransactionObserver</code>协议，然后实现这个方法：</p>
+<pre><code><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)paymentQueue:(<span class="built_in">SKPaymentQueue</span> *)queue updatedTransactions:(<span class="built_in">NSArray</span> *)transactions</div><div class="line">&#123;</div><div class="line">   	<span class="keyword">for</span> (<span class="built_in">SKPaymentTransaction</span> *transaction <span class="keyword">in</span> transactions) &#123;</div><div class="line">       	<span class="keyword">switch</span> (transaction.transactionState) &#123;</div><div class="line">           	<span class="comment">// Call the appropriate custom method.</span></div><div class="line">           	<span class="keyword">case</span> <span class="built_in">SKPaymentTransactionStatePurchased</span>:</div><div class="line">               [<span class="keyword">self</span> completeTransaction:transaction];</div><div class="line">               <span class="keyword">break</span>;</div><div class="line">           	<span class="keyword">case</span> <span class="built_in">SKPaymentTransactionStateFailed</span>:</div><div class="line">               [<span class="keyword">self</span> failedTransaction:transaction];</div><div class="line">               <span class="keyword">break</span>;</div><div class="line">           	<span class="keyword">case</span> <span class="built_in">SKPaymentTransactionStateRestored</span>:</div><div class="line">               	[<span class="keyword">self</span> restoreTransaction:transaction];</div><div class="line">           	<span class="keyword">default</span>:</div><div class="line">              	 <span class="keyword">break</span>;</div><div class="line">      	 	&#125;</div><div class="line"> 	  	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</code></pre><h3 id="验证收据并发货"><a href="#验证收据并发货" class="headerlink" title="验证收据并发货"></a>验证收据并发货</h3><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSURL</span> *receiptURL = [[<span class="built_in">NSBundle</span> mainBundle] appStoreReceiptURL]</div><div class="line"></div><div class="line"><span class="comment">// 从沙盒中获取到购买凭据</span></div><div class="line"><span class="built_in">NSData</span> *receiptData = [<span class="built_in">NSData</span> dataWithContentsOfURL:receiptURL];</div><div class="line"></div><div class="line"><span class="comment">// 发送收据到服务器</span></div><div class="line">[<span class="keyword">self</span> verifyReceiptWithOrderId:transaction.payment.applicationUsername</div><div class="line">                   receiptData:receiptData transaction:transaction</div><div class="line">                       success:successBlock</div><div class="line">                       failure:failureBlock];</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+      
+      
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/笔记/">笔记</a>
+            
+          </div>
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2017/07/07/面试总结/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">近几日面试有感</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2017/04/29/拔牙记/">
+        <span class="next-text nav-default">拔牙记</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:hunter_mz@icloud.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+      
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2015 - 
+    
+    2017
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">HunterMz</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://huntermz.site/2017/05/15/苹果内购总结/';
+        this.page.identifier = '2017/05/15/苹果内购总结/';
+        this.page.title = '苹果内购总结';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//huntermz.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.4.x"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.4.x"></script>
+
+  </body>
+</html>

@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="多线程和多任务"/>
+
+
+
+
+  <meta name="keywords" content="多线程, HunterMz's  Blog" />
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="HunterMz's  Blog">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.4.x" />
+
+
+
+<link rel="canonical" href="http://huntermz.site/2016/07/07/多线程和多任务/"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.4.x" />
+
+
+
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+    <title> 多线程和多任务 - HunterMz's  Blog </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">HunterMz's  Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            Home
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            Archives
+          
+        </li>
+      </a>
+    
+      <a href="/tags">
+        <li class="mobile-menu-item">
+          
+          
+            tags
+          
+        </li>
+      </a>
+    
+      <a href="/categories">
+        <li class="mobile-menu-item">
+          
+          
+            categories
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">HunterMz's  Blog</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            
+            
+              标签
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/categories">
+            
+            
+              分类
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          多线程和多任务
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2016-07-07
+        </span>
+        
+          <div class="post-category">
+            
+              <a href="/categories/编程基础/">编程基础</a>
+            
+          </div>
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#iOS-提供的多线程方案"><span class="toc-text">iOS 提供的多线程方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pthread"><span class="toc-text">Pthread</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NSThread"><span class="toc-text">NSThread</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GCD"><span class="toc-text">GCD</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建队列"><span class="toc-text">创建队列</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NSOperation和NSOperationQueue"><span class="toc-text">NSOperation和NSOperationQueue</span></a></li></ol>
+    </div>
+  </div>
+
+
+    <div class="post-content">
+      
+        <h2 id="iOS-提供的多线程方案"><a href="#iOS-提供的多线程方案" class="headerlink" title="iOS 提供的多线程方案"></a>iOS 提供的多线程方案</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">1. Pthreads</div><div class="line">2. NSThread</div><div class="line">3. GCD</div><div class="line">4. NSOperation &amp; NSOperationQueue</div></pre></td></tr></table></figure>
+<p><img src="https://o9xwn216o.qnssl.com/blog-img/1467887537015.png" alt=""></p>
+<a id="more"></a>
+<h2 id="Pthread"><a href="#Pthread" class="headerlink" title="Pthread"></a>Pthread</h2><p>需要导入头文件，iOS开发中几乎用不到</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">&lt;pthread.h&gt;</span></span></div></pre></td></tr></table></figure>
+<h2 id="NSThread"><a href="#NSThread" class="headerlink" title="NSThread"></a>NSThread</h2><p>多用于调试，三种线程调度方法</p>
+<ul>
+<li>alloc / init</li>
+</ul>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSThread</span> *thread = [[<span class="built_in">NSThread</span> alloc] initWithTarget:<span class="keyword">self</span>.person selector:<span class="keyword">@selector</span>(longOperation:) object:<span class="string">@"THREAD"</span>];</div><div class="line"></div><div class="line">[thread start];</div></pre></td></tr></table></figure>
+<ul>
+<li>detach</li>
+</ul>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[<span class="built_in">NSThread</span> detachNewThreadSelector:<span class="keyword">@selector</span>(longOperation:) toTarget:<span class="keyword">self</span>.person withObject:<span class="string">@"DETACH"</span>];</div></pre></td></tr></table></figure>
+<ul>
+<li>分类方法</li>
+</ul>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[<span class="keyword">self</span>.person performSelectorInBackground:<span class="keyword">@selector</span>(longOperation:) withObject:<span class="string">@"PERFORM"</span>];</div></pre></td></tr></table></figure>
+<h2 id="GCD"><a href="#GCD" class="headerlink" title="GCD"></a>GCD</h2><p><strong>任务</strong>：即操作，你想要干什么，说白了就是一段代码，在 GCD 中就是一个 Block，任务有同步执行 和 异步执行两种执行方式，他们之间的区别是 是否会创建新的线程。    </p>
+<p>  <strong>同步执行</strong>: 一般来说，只要是同步执行的任务，都会在当前线程执行，不会另开线程。但是当在其他线程往主线程派发任务，则会回到主线程执行；同步执行会阻塞当前线程，并等待block中的任务执行完毕，然后当前线程才会继续往下执行。     </p>
+<p>  <strong>异步执行</strong>: 一般来说只要是异步执行的任务，都会另开线程，在别的线程执行。但是当在主线程异步派发任务到主线程，还是会在主线程执行，不会另开线程的；当前线程会直接往下执行，不会阻塞当前线程。</p>
+<p><strong>队列</strong>：用于存放任务。一共有两种队列， <strong>串行队列</strong> 和 <strong>并行队列</strong>    </p>
+<p>  <strong>串行队列</strong> 中的任务会根据队列的定义 FIFO 的执行，一个接一个的先进先出的进行执行。</p>
+<blockquote>
+<p><strong>注：放到串行队列的任务，GCD 会 <code>FIFO（先进先出）</code> 地取出来一个，执行一个，然后取下一个，这样一个一个的执行。</strong>      </p>
+</blockquote>
+<p>  <strong>并行队列</strong> 中的任务 根据同步或异步有不同的执行方式。     </p>
+<blockquote>
+<p><strong>注</strong>：放到并行队列的任务，GCD 也会 <code>FIFO</code>的取出来，但不同的是，它取出来一个就会放到别的线程，然后再取出来一个又放到另一个的线程。这样由于取的动作很快，忽略不计，看起来，所有的任务都是一起执行的。不过需要注意，GCD 会根据系统资源控制并行的数量，所以如果任务很多，它并不会让所有任务同时执行。**</p>
+</blockquote>
+<p>线程在队列中的执行方式总结如下表:     </p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center"><strong>同步执行</strong></th>
+<th style="text-align:center"><strong>异步执行</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><strong>串行队列</strong></td>
+<td style="text-align:center">当前线程，一个一个执行</td>
+<td style="text-align:center">其他线程，一个一个执行</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>并行队列</strong></td>
+<td style="text-align:center">当前线程，一个一个执行</td>
+<td style="text-align:center">开很多线程，一起执行</td>
+</tr>
+</tbody>
+</table>
+<h3 id="创建队列"><a href="#创建队列" class="headerlink" title="创建队列"></a>创建队列</h3><p><strong>主队列</strong>：这是一个特殊的<code>串行队列</code>。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">dispatch_queue_t</span> queue = dispatch_get_main_queue();</div></pre></td></tr></table></figure>
+<p><strong>自己创建的队列</strong>：凡是自己创建的队列默认都是 <code>串行队列</code></p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 创建串行队列</span></div><div class="line"><span class="built_in">dispatch_queue_t</span> queue = dispatch_queue_create(<span class="string">"tk.bourne.testQueue"</span>, <span class="literal">NULL</span>);</div><div class="line"><span class="built_in">dispatch_queue_t</span> queue = dispatch_queue_create(<span class="string">"tk.bourne.testQueue"</span>, DISPATCH_QUEUE_SERIAL);</div><div class="line"></div><div class="line"><span class="comment">// 创建并行队列</span></div><div class="line"><span class="built_in">dispatch_queue_t</span> queue = dispatch_queue_create(<span class="string">"tk.bourne.testQueue"</span>, DISPATCH_QUEUE_CONCURRENT);</div></pre></td></tr></table></figure>
+<p><strong>全局并行队列</strong>：这应该是唯一一个并行队列， 只要是并行任务一般都加入到这个队列。这是系统提供的一个并发队列。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">dispatch_queue_t</span> queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, <span class="number">0</span>);</div></pre></td></tr></table></figure>
+<h2 id="NSOperation和NSOperationQueue"><a href="#NSOperation和NSOperationQueue" class="headerlink" title="NSOperation和NSOperationQueue"></a>NSOperation和NSOperationQueue</h2><p>操作步骤：</p>
+<ol>
+<li>将要执行的任务封装到一个 <code>NSOperation</code> 对象中。</li>
+<li>将此任务添加到一个 <code>NSOperationQueue</code> 对象中。</li>
+</ol>
+
+      
+    </div>
+
+    
+      
+      
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/多线程/">多线程</a>
+            
+          </div>
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2016/07/21/Swift 自定义类型/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">Swift——自定义类型</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2016/07/07/归档/">
+        <span class="next-text nav-default">数据持久化保存——归档</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:hunter_mz@icloud.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+      
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2015 - 
+    
+    2017
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">HunterMz</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://huntermz.site/2016/07/07/多线程和多任务/';
+        this.page.identifier = '2016/07/07/多线程和多任务/';
+        this.page.title = '多线程和多任务';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//huntermz.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.4.x"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.4.x"></script>
+
+  </body>
+</html>

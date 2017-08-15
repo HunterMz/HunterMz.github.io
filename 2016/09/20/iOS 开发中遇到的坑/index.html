@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="iOS 开发中遇到的坑"/>
+
+
+
+
+  <meta name="keywords" content="笔记, HunterMz's  Blog" />
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="HunterMz's  Blog">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.4.x" />
+
+
+
+<link rel="canonical" href="http://huntermz.site/2016/09/20/iOS 开发中遇到的坑/"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.4.x" />
+
+
+
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+    <title> iOS 开发中遇到的坑 - HunterMz's  Blog </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">HunterMz's  Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            Home
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            Archives
+          
+        </li>
+      </a>
+    
+      <a href="/tags">
+        <li class="mobile-menu-item">
+          
+          
+            tags
+          
+        </li>
+      </a>
+    
+      <a href="/categories">
+        <li class="mobile-menu-item">
+          
+          
+            categories
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">HunterMz's  Blog</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            
+            
+              标签
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/categories">
+            
+            
+              分类
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          iOS 开发中遇到的坑
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2016-09-20
+        </span>
+        
+          <div class="post-category">
+            
+              <a href="/categories/iOS开发/">iOS开发</a>
+            
+          </div>
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#记录-iOS-开发中遇到的坑，持续更新…"><span class="toc-text">记录 iOS 开发中遇到的坑，持续更新…..</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#iOS10-权限描述-crash"><span class="toc-text">iOS10 权限描述 crash</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#无权限访问此文件"><span class="toc-text">无权限访问此文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Xcode编译时候出现各种诡异的问题"><span class="toc-text">Xcode编译时候出现各种诡异的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#横屏状态栏不显示"><span class="toc-text">横屏状态栏不显示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#手机平放横屏竖屏判断"><span class="toc-text">手机平放横屏竖屏判断</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#监听屏幕旋转"><span class="toc-text">监听屏幕旋转</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#判断当前控制器是-push-进来的还是-present-进来"><span class="toc-text">判断当前控制器是 push 进来的还是 present 进来</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#审核"><span class="toc-text">审核</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Missing-Push-Notification-Entitlement"><span class="toc-text">Missing Push Notification Entitlement</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#内购商品超过99-99美元被拒绝"><span class="toc-text">内购商品超过99.99美元被拒绝</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IDFA"><span class="toc-text">IDFA</span></a></li></ol></li></ol>
+    </div>
+  </div>
+
+
+    <div class="post-content">
+      
+        <h1 id="记录-iOS-开发中遇到的坑，持续更新…"><a href="#记录-iOS-开发中遇到的坑，持续更新…" class="headerlink" title="记录 iOS 开发中遇到的坑，持续更新….."></a>记录 iOS 开发中遇到的坑，持续更新…..</h1><h2 id="iOS10-权限描述-crash"><a href="#iOS10-权限描述-crash" class="headerlink" title="iOS10 权限描述 crash"></a>iOS10 权限描述 crash</h2><p><strong>问题描述：</strong>当使用 iOS10 运行项目会 crash，报错信息如下：</p>
+<font color="red"><strong>This app has crashed because it attempted to access privacy-sensitive data without a usage description.  The app’s Info.plist must contain an NSContactsUsageDescription key with a string value explaining to the user how the app uses this data.</strong></font>
+
+<p><strong>原因分析：</strong></p>
+<p>在 iOS10 中，如果有访问系统资源，例如：照相机、相册、麦克风、通讯录等，需要在 info.plist 文件中添加描述字段</p>
+<p><strong>解决方案：</strong></p>
+<a id="more"></a>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">// 使用照相机</div><div class="line">&lt;key&gt;NSCameraUsageDescription&lt;/key&gt;    </div><div class="line">	&lt;string&gt;此应用会访问您的相机&lt;/string&gt;</div><div class="line"></div><div class="line">// 使用相册</div><div class="line">&lt;key&gt;NSPhotoLibraryUsageDescription&lt;/key&gt;</div><div class="line">    &lt;string&gt;此应用会访问您的相册&lt;/string&gt;</div><div class="line">// 使用通讯录</div><div class="line">&lt;key&gt;NSContactsUsageDescription&lt;/key&gt;    </div><div class="line">	&lt;string&gt;此应用会访问您的通讯录&lt;/string&gt;</div><div class="line"></div><div class="line">// 使用麦克风</div><div class="line">&lt;key&gt;NSMicrophoneUsageDescription&lt;/key&gt;    </div><div class="line">	&lt;string&gt;此应用会访问您的麦克风&lt;/string&gt;</div></pre></td></tr></table></figure>
+<h2 id="无权限访问此文件"><a href="#无权限访问此文件" class="headerlink" title="无权限访问此文件"></a>无权限访问此文件</h2><p><strong>问题描述：</strong><br>   当修改项目中的 plist 文件后运行项目，会出现以下错误：</p>
+<p><img src="https://o9xwn216o.qnssl.com/blog-img/1473670178405.png" alt=""></p>
+<p><strong>原因分析</strong><br>猜想可能是缓存内的文件和当前编译文件冲突</p>
+<p><strong>解决办法</strong></p>
+<ol>
+<li>cmd + shift + k 清空 -—&gt; cmd + r</li>
+<li>方法一有时候会不管用，如果不管用，就 Project–&gt;Build Setting中 修改这一项，变成Default Compiler（Apple LLVM 6.0） </li>
+</ol>
+<p><img src="https://o9xwn216o.qnssl.com/blog-img/1473670782316.png" alt=""></p>
+<h2 id="Xcode编译时候出现各种诡异的问题"><a href="#Xcode编译时候出现各种诡异的问题" class="headerlink" title="Xcode编译时候出现各种诡异的问题"></a>Xcode编译时候出现各种诡异的问题</h2><p>请到这个<code>/Users/用户名/Library/Developer/Xcode/DerivedData</code>目录下清理下Xcode缓存,我的问题是，编译时候报文件找不到，但是可以跑起来，<code>cmd + shift + c</code>了好几次都不行，然后到缓存目录，全部清理掉，就可以了。。。</p>
+<h2 id="横屏状态栏不显示"><a href="#横屏状态栏不显示" class="headerlink" title="横屏状态栏不显示"></a>横屏状态栏不显示</h2><p>横屏后状态栏不显示了,这是因为iOS系统(好像是iOS8之后)在视图横屏的时候默认把状态栏隐藏掉了，解决方案：</p>
+<ol>
+<li><p>在plist文件中将 View controller-based status bar appearance 设置为NO</p>
+</li>
+<li><p>在application:didFinishLaunchingWithOptions:中添加下面代码</p>
+</li>
+</ol>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[[<span class="built_in">UIApplication</span> sharedApplication] setStatusBarHidden:<span class="literal">YES</span> withAnimation:<span class="built_in">UIStatusBarAnimationNone</span>];</div><div class="line"></div><div class="line">[[<span class="built_in">UIApplication</span> sharedApplication] setStatusBarHidden:<span class="literal">NO</span> withAnimation:<span class="built_in">UIStatusBarAnimationNone</span>];</div></pre></td></tr></table></figure>
+<h2 id="手机平放横屏竖屏判断"><a href="#手机平放横屏竖屏判断" class="headerlink" title="手机平放横屏竖屏判断"></a>手机平放横屏竖屏判断</h2><p>iOS 可以检测屏幕方向，如下枚举</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">UIDeviceOrientationUnknown</span>            <span class="comment">// 方向未知    UIDeviceOrientationPortrait           // Device oriented vertically, home button on the bottom</span></div><div class="line"></div><div class="line"><span class="built_in">UIDeviceOrientationPortraitUpsideDown</span> <span class="comment">// Device oriented vertically, home button on the top</span></div><div class="line"></div><div class="line"><span class="built_in">UIDeviceOrientationLandscapeLeft</span>      <span class="comment">// Device oriented horizontally, home button on the right</span></div><div class="line"></div><div class="line"><span class="built_in">UIDeviceOrientationLandscapeRight</span>     <span class="comment">// Device oriented horizontally, home button on the left</span></div><div class="line"></div><div class="line"><span class="built_in">UIDeviceOrientationFaceUp</span>             <span class="comment">// Device oriented flat, face up</span></div><div class="line"></div><div class="line"><span class="built_in">UIDeviceOrientationFaceDown</span></div></pre></td></tr></table></figure>
+<p>但是当手机平放时就无法判断是横屏还是竖屏了。准确的说是不知道从<code>横屏进入平放</code>还是<code>从竖屏进入平放</code>。假设你的横屏和竖屏 UI 变化比较大，那么你的设备    <code>从横屏变为平放</code> 和 <code>从竖屏变为平放</code>就尤为重要了。</p>
+<p>终于找到一种方法，可以解决问题了….</p>
+<p>通过判断 statusBarOrientaion 的方向。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">UIInterfaceOrientationUnknown</span>            = <span class="built_in">UIDeviceOrientationUnknown</span>,</div><div class="line"> </div><div class="line"><span class="built_in">UIInterfaceOrientationPortrait</span>           = <span class="built_in">UIDeviceOrientationPortrait</span>,</div><div class="line"></div><div class="line"><span class="built_in">UIInterfaceOrientationPortraitUpsideDown</span> = **<span class="built_in">UIDeviceOrientationPortraitUpsideDown</span>,</div><div class="line">    </div><div class="line"><span class="built_in">UIInterfaceOrientationLandscapeLeft</span>      = <span class="built_in">UIDeviceOrientationLandscapeRight</span>,</div><div class="line"></div><div class="line"><span class="built_in">UIInterfaceOrientationLandscapeRight</span>     = <span class="built_in">UIDeviceOrientationLandscapeLeft</span></div></pre></td></tr></table></figure>
+<h2 id="监听屏幕旋转"><a href="#监听屏幕旋转" class="headerlink" title="监听屏幕旋转"></a>监听屏幕旋转</h2><p>开放发总会遇到需要根据设备旋转来做屏幕适配。我相信绝大部分开发者都去监听了 <code>UIDeviceOrientationDidChangeNotification</code> 这个通知，我也是。但是有一些问题经常出现。当设备旋转时得到你的方向太多了，看代码：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="built_in">NS_ENUM</span>(<span class="built_in">NSInteger</span>, <span class="built_in">UIDeviceOrientation</span>) &#123;</div><div class="line">    <span class="built_in">UIDeviceOrientationUnknown</span>,</div><div class="line">    <span class="built_in">UIDeviceOrientationPortrait</span>,            <span class="comment">// Device oriented vertically, home button on the bottom</span></div><div class="line">    <span class="built_in">UIDeviceOrientationPortraitUpsideDown</span>,  <span class="comment">// Device oriented vertically, home button on the top</span></div><div class="line">    <span class="built_in">UIDeviceOrientationLandscapeLeft</span>,       <span class="comment">// Device oriented horizontally, home button on the right</span></div><div class="line">    <span class="built_in">UIDeviceOrientationLandscapeRight</span>,      <span class="comment">// Device oriented horizontally, home button on the left</span></div><div class="line">    <span class="built_in">UIDeviceOrientationFaceUp</span>,              <span class="comment">// Device oriented flat, face up</span></div><div class="line">    <span class="built_in">UIDeviceOrientationFaceDown</span>             <span class="comment">// Device oriented flat, face down</span></div><div class="line">&#125; __TVOS_PROHIBITED;</div></pre></td></tr></table></figure>
+<p>就是 <code>UIDeviceOrientationUnknown</code> 和 <code>UIDeviceOrientationFaceUp</code> 经常捣乱，导致判断不准。</p>
+<p>后来发现还有一个通知 <code>UIApplicationDidChangeStatusBarFrameNotification</code>，系统只会在四种情况下发这个通知：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">UIDeviceOrientationPortrait</span>  </div><div class="line"><span class="built_in">UIDeviceOrientationPortraitUpsideDown</span>  </div><div class="line"><span class="built_in">UIDeviceOrientationLandscapeLeft</span>  </div><div class="line"><span class="built_in">UIDeviceOrientationLandscapeRight</span></div></pre></td></tr></table></figure>
+<p>完美解觉问题</p>
+<h2 id="判断当前控制器是-push-进来的还是-present-进来"><a href="#判断当前控制器是-push-进来的还是-present-进来" class="headerlink" title="判断当前控制器是 push 进来的还是 present 进来"></a>判断当前控制器是 push 进来的还是 present 进来</h2><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (<span class="keyword">self</span>.navigationController.viewControllers.count &gt; <span class="number">1</span>) &#123;</div><div class="line">	<span class="comment">// push </span></div><div class="line">	[<span class="keyword">self</span>.navigationController popViewControllerAnimated:<span class="literal">YES</span>];</div><div class="line">&#125;<span class="keyword">else</span> &#123;</div><div class="line">	<span class="comment">// present</span></div><div class="line">	[<span class="keyword">self</span> dismissViewControllerAnimated:[<span class="built_in">NSUserDefaults</span> standardUserDefaults].userAnimated completion:<span class="literal">nil</span>];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="审核"><a href="#审核" class="headerlink" title="审核"></a>审核</h2><h3 id="Missing-Push-Notification-Entitlement"><a href="#Missing-Push-Notification-Entitlement" class="headerlink" title="Missing Push Notification Entitlement"></a>Missing Push Notification Entitlement</h3><blockquote>
+<p>Missing Push Notification Entitlement - Your app includes an API for Apple’s Push Notification service, but the aps-environment entitlement is missing from the app’s signature. To resolve this, make sure your App ID is enabled for push notification in the Provisioning Portal. Then, sign your app with a distribution provisioning profile that <code>includes the aps-environment entitlement</code>. This will create the correct signature, and you can resubmit your app. See “Provisioning and Development” in the Local and Push Notification Programming Guide for more information. If your app does not use the Apple Push Notification service, no action is required. You may remove the API from future submissions to stop this warning. If you use a third-party framework, you may need to contact the developer for information on removing the API.</p>
+</blockquote>
+<p>Xcode 7以后的坑，解决办法：</p>
+<p><img src="http://o9xc0bh9t.bkt.clouddn.com/14834937846063.jpg" alt=""></p>
+<h3 id="内购商品超过99-99美元被拒绝"><a href="#内购商品超过99-99美元被拒绝" class="headerlink" title="内购商品超过99.99美元被拒绝"></a>内购商品超过99.99美元被拒绝</h3><p>iTunesConnect上允许你建立超过99.99美元的消耗型商品，但是审核的时候默认是不允许超过99.99美元的消耗型商品。</p>
+<h2 id="IDFA"><a href="#IDFA" class="headerlink" title="IDFA"></a>IDFA</h2><p>iOS开发中，我们经常需要获取设备的唯一表示符。以前可以通过获取UDID来作为设备的唯一标识。但是2012年5月1日后，苹果开始禁止应用获取设备的UDID。那只能通过获取IDFA来识别设备了。</p>
+<p><strong>问题描述：</strong><br>    使用以下代码获取设备的IDFA</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];</div></pre></td></tr></table></figure>
+<p>在运行阶段没有任何问题，但是当把应用传到TestFlight进行测试的时候发现，每次杀掉进程重新启动应用获取到的IDFA都是不一样的。当应用通过审核，上传到App Store时，又恢复正常。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">- (<span class="built_in">NSArray</span> *)deleteEvenNumberWithArray:(<span class="built_in">NSArray</span> *)array &#123;</div><div class="line">    <span class="built_in">NSMutableArray</span> *tempMutableArray = [<span class="built_in">NSMutableArray</span> arrayWithArray:array];</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; tempMutableArray.count; i++) &#123;</div><div class="line">        <span class="built_in">NSInteger</span> tempInteger = [tempMutableArray[i] integerValue];</div><div class="line">        <span class="keyword">if</span> (tempInteger % <span class="number">2</span> == <span class="number">0</span>) &#123;</div><div class="line">            [tempMutableArray removeObjectAtIndex:i];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> tempMutableArray.copy;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+      
+      
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/笔记/">笔记</a>
+            
+          </div>
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2016/11/25/静态库&项目依赖/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">静态库 & 项目依赖</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2016/09/02/RxSwfit 笔记/">
+        <span class="next-text nav-default">RxSwift 操作符自查笔记</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:hunter_mz@icloud.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+      
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2015 - 
+    
+    2017
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">HunterMz</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://huntermz.site/2016/09/20/iOS 开发中遇到的坑/';
+        this.page.identifier = '2016/09/20/iOS 开发中遇到的坑/';
+        this.page.title = 'iOS 开发中遇到的坑';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//huntermz.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.4.x"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.4.x"></script>
+
+  </body>
+</html>

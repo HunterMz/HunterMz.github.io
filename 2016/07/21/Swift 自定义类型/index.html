@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="Swift——自定义类型"/>
+
+
+
+
+  <meta name="keywords" content="Swift, HunterMz's  Blog" />
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="HunterMz's  Blog">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.4.x" />
+
+
+
+<link rel="canonical" href="http://huntermz.site/2016/07/21/Swift 自定义类型/"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.4.x" />
+
+
+
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+    <title> Swift——自定义类型 - HunterMz's  Blog </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">HunterMz's  Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            Home
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            Archives
+          
+        </li>
+      </a>
+    
+      <a href="/tags">
+        <li class="mobile-menu-item">
+          
+          
+            tags
+          
+        </li>
+      </a>
+    
+      <a href="/categories">
+        <li class="mobile-menu-item">
+          
+          
+            categories
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">HunterMz's  Blog</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            
+            
+              标签
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/categories">
+            
+            
+              分类
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Swift——自定义类型
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2016-07-21
+        </span>
+        
+          <div class="post-category">
+            
+              <a href="/categories/iOS开发/">iOS开发</a>
+            
+          </div>
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Hashable-协议"><span class="toc-text">Hashable 协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Comparable协议"><span class="toc-text">Comparable协议</span></a></li></ol>
+    </div>
+  </div>
+
+
+    <div class="post-content">
+      
+        <h2 id="Hashable-协议"><a href="#Hashable-协议" class="headerlink" title="Hashable 协议"></a>Hashable 协议</h2><ul>
+<li><p>什么是Hashable(哈希值)？<br>  <code>Hashable</code> 常用于快速定位和查找（用于Set里面的对象和Dictionary里面的作为key的对象，都需要实现（Hashable）协议）被哈希的对象。</p>
+<blockquote>
+<p>计算机内部会维护一个HashTable的一个表（想象成数据库的表），表类似于键值对的形式存在，hashValue就作为键（类似于带有索引的一个没有唯一约束的一个字段，注：并非主键，因为一个hashValue可能对应多条记录（也就是多个对象）。再判断相等用Equatable）<br>原文链接：<a href="http://www.jianshu.com/p/5aa75cd5e13e" target="_blank" rel="external">http://www.jianshu.com/p/5aa75cd5e13e</a></p>
+</blockquote>
+</li>
+<li><p>Swift 中的Hashable协议<br>  关于<code>Hashable</code> 协议，苹果官方文档中给出如下概述：</p>
+<blockquote>
+<p>A hash value, provided by a type’s hashValue property, is an integer that is the same for any two instances that compare equally. That is, for two instances a and b of the same type, if a == b then a.hashValue == b.hashValue. The reverse is not true: Two instances with equal hash values are not necessarily equal to each other.</p>
+</blockquote>
+<p>  可见通常我们可以通过比较两个类型的 <code>hash value</code> 来确定两个类型是否相等。</p>
+</li>
+</ul>
+<a id="more"></a>
+<ul>
+<li><p>Hashable 的应用<br>  因为 <code>Hashable</code> 本身继承自 <code>Equatable</code>，当自定义的类型遵守 <code>Hashable</code> 协议的时候还有实现 <code>Equatable</code> 的方法：</p>
+  <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> ==<span class="params">(lhs: GridPoint, rhs: GridPoint)</span></span> -&gt; <span class="type">Bool</span> &#123;</div><div class="line">   	<span class="keyword">return</span> lhs.x == rhs.x &amp;&amp; lhs.y == rhs.y</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">GridPoint</span>: <span class="title">Hashable</span> </span>&#123;</div><div class="line">   	<span class="keyword">var</span> hashValue: <span class="type">Int</span> &#123;</div><div class="line">       	<span class="keyword">return</span> x.hashValue ^ y.hashValue</div><div class="line">   	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="Comparable协议"><a href="#Comparable协议" class="headerlink" title="Comparable协议"></a>Comparable协议</h2><ul>
+<li><p>如果你的自定义类型想要实现比较大小，则需要遵守 <code>Comparable</code>协议，因为 <code>Comparable</code>继承自 <code>Equatable</code>协议，所以你必须实现一个 <code>==</code>方法，又因为本身定义，至少要实现 <code>&lt;</code> 方法，其他的操作符方法可选。例如：</p>
+  <figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> &gt;<span class="params">(lhs: BasicModel, rhs: BasicModel)</span></span> -&gt; <span class="type">Bool</span> &#123;</div><div class="line">   	<span class="keyword">return</span> lhs.age &gt; rhs.age</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> &gt;=<span class="params">(lhs: BasicModel, rhs: BasicModel)</span></span> -&gt; <span class="type">Bool</span> &#123;</div><div class="line">  	 <span class="keyword">return</span> lhs.age &gt;= rhs.age</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> &lt;(lhs: BasicModel, rhs: BasicModel) -&gt; <span class="title">Bool</span> </span>&#123;</div><div class="line">   	<span class="keyword">return</span> lhs.age &lt; rhs.age</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> &lt;=(lhs: BasicModel, rhs: BasicModel) -&gt; <span class="title">Bool</span> </span>&#123;</div><div class="line">   	<span class="keyword">return</span> lhs.age &lt;= rhs.age</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+      
+      
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/Swift/">Swift</a>
+            
+          </div>
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2016/09/02/RxSwfit 笔记/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">RxSwift 操作符自查笔记</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2016/07/07/多线程和多任务/">
+        <span class="next-text nav-default">多线程和多任务</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:hunter_mz@icloud.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+      
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2015 - 
+    
+    2017
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">HunterMz</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://huntermz.site/2016/07/21/Swift 自定义类型/';
+        this.page.identifier = '2016/07/21/Swift 自定义类型/';
+        this.page.title = 'Swift——自定义类型';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//huntermz.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.4.x"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.4.x"></script>
+
+  </body>
+</html>

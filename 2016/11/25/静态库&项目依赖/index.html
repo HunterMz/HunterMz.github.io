@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="静态库 & 项目依赖"/>
+
+
+
+
+  <meta name="keywords" content="教程, HunterMz's  Blog" />
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="HunterMz's  Blog">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.4.x" />
+
+
+
+<link rel="canonical" href="http://huntermz.site/2016/11/25/静态库&项目依赖/"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.4.x" />
+
+
+
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+    <title> 静态库 & 项目依赖 - HunterMz's  Blog </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">HunterMz's  Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            Home
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            Archives
+          
+        </li>
+      </a>
+    
+      <a href="/tags">
+        <li class="mobile-menu-item">
+          
+          
+            tags
+          
+        </li>
+      </a>
+    
+      <a href="/categories">
+        <li class="mobile-menu-item">
+          
+          
+            categories
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">HunterMz's  Blog</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            
+            
+              标签
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/categories">
+            
+            
+              分类
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          静态库 & 项目依赖
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2016-11-25
+        </span>
+        
+          <div class="post-category">
+            
+              <a href="/categories/iOS开发/">iOS开发</a>
+            
+          </div>
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-制作静态库"><span class="toc-text">1. 制作静态库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-使用静态库"><span class="toc-text">2. 使用静态库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-可能遇到的错误"><span class="toc-text">3. 可能遇到的错误</span></a></li></ol>
+    </div>
+  </div>
+
+
+    <div class="post-content">
+      
+        <h2 id="1-制作静态库"><a href="#1-制作静态库" class="headerlink" title="1. 制作静态库"></a>1. 制作静态库</h2><ul>
+<li><p>新建一个 <code>WorkSpace</code> </p>
+<p>  <img src="http://o9xc0bh9t.bkt.clouddn.com/14799821305845.jpg" alt=""></p>
+</li>
+<li><p>Xcode -&gt; File -&gt; New -&gt;Project，选择 <code>Cocoa Touch Static Library</code></p>
+<p>  <img src="http://o9xc0bh9t.bkt.clouddn.com/14799822604174.jpg" alt=""></p>
+</li>
+</ul>
+<a id="more"></a>
+<ul>
+<li><p>保存到 <code>Demo.xworkspace</code></p>
+<p>  <img src="http://o9xc0bh9t.bkt.clouddn.com/14799823010439.jpg" alt=""></p>
+</li>
+<li><p>将要抽取的文件拖入 <code>MyLib</code>，选中Target <code>MyLib</code> -&gt; <code>Build Phases</code> -&gt; 点击 <code>+</code> 添加 <code>New Header Phase</code></p>
+<p>  <img src="http://o9xc0bh9t.bkt.clouddn.com/14799830026335.jpg" alt=""></p>
+</li>
+<li><p>将 <code>MyLib.h</code> 拖到 Public 目录下</p>
+<p>  <img src="http://o9xc0bh9t.bkt.clouddn.com/14800430508220.jpg" alt=""></p>
+</li>
+<li><p>选中 Project <code>MyLib</code>， 选中 <code>Build Setting</code> 设置 最低版本版本，</p>
+<p>  <img src="http://o9xc0bh9t.bkt.clouddn.com/14799833021431.jpg" alt=""></p>
+</li>
+</ul>
+<p>最后，编译静态库，我们就完成了第一步 ———— 制作静态库。</p>
+<h2 id="2-使用静态库"><a href="#2-使用静态库" class="headerlink" title="2. 使用静态库"></a>2. 使用静态库</h2><p>有了静态库后我们看下如何在项目中使用静态库。</p>
+<ul>
+<li><p>创建工程 <code>MyProject</code>，并保存到 <code>Demo.xworkspace</code></p>
+<p>  <img src="http://o9xc0bh9t.bkt.clouddn.com/14799831246704.jpg" alt=""></p>
+</li>
+</ul>
+<p>目录结构如图所示</p>
+<p><img src="http://o9xc0bh9t.bkt.clouddn.com/14799832018502.jpg" alt=""></p>
+<ul>
+<li><p>在 <code>MyProject</code> 中引用 <code>MyLib</code>     </p>
+<ul>
+<li><p>选中 <code>MyProject</code>，Add <code>MyLib.xcodeproj</code></p>
+<p>  <img src="http://o9xc0bh9t.bkt.clouddn.com/14799833916582.jpg" alt=""></p>
+</li>
+<li><p>完成之后如图所示</p>
+<p>  <img src="http://o9xc0bh9t.bkt.clouddn.com/14799834316223.jpg" alt=""></p>
+</li>
+</ul>
+</li>
+<li><p>导入静态库，添加依赖，不多说，看图</p>
+<p>  <img src="http://o9xc0bh9t.bkt.clouddn.com/14799836057634.jpg" alt=""></p>
+<p>  <img src="http://o9xc0bh9t.bkt.clouddn.com/14799836421011.jpg" alt=""></p>
+</li>
+<li><p>对 <code>MyProject</code> 进行设置<br>  这时候我们如果直接使用静态库，会报找不到文件的错误，所以要对工程进行设置</p>
+<ul>
+<li><p>选中 Target <code>MyProject</code> -&gt; <code>Build Settings</code> -&gt; 搜索’header search’，双击 <code>Header Search Paths</code></p>
+<p>  <img src="http://o9xc0bh9t.bkt.clouddn.com/14799837547604.jpg" alt=""></p>
+</li>
+<li><p>点击 <code>+</code> 做如下添加</p>
+<p>  <img src="http://o9xc0bh9t.bkt.clouddn.com/14799849327050.jpg" alt=""></p>
+<ul>
+<li>选中 Target <code>MyProject</code> -&gt; <code>Build Settings</code> -&gt; 搜索’other link’，双击 <code>Other Linker Flags</code>，做如下添加：</li>
+</ul>
+<p><img src="http://o9xc0bh9t.bkt.clouddn.com/14799849541889.jpg" alt=""></p>
+<blockquote>
+<p>注：做这一步主要是因为如果你的静态库里面包含分类的话会报找不到头文件的错误。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>在要使用的地方导入头文件，然后就可以访问静态库中的方法了</p>
+<p>  <img src="http://o9xc0bh9t.bkt.clouddn.com/14799849906090.jpg" alt=""></p>
+<h2 id="3-可能遇到的错误"><a href="#3-可能遇到的错误" class="headerlink" title="3. 可能遇到的错误"></a>3. 可能遇到的错误</h2></li>
+<li>MyLib.h file not find<br><img src="http://o9xc0bh9t.bkt.clouddn.com/14800460814332.jpg" alt=""></li>
+</ul>
+<p>出现这种情况，请先检查这一步有没有正确设置：</p>
+<p><img src="http://o9xc0bh9t.bkt.clouddn.com/14799849327050.jpg" alt=""></p>
+<p>有时候你明明设置好了还是报错，但是项目竟然可以运行，我就遇到了。。。。这时候就是Xcode缓存的问题了，需要做如下处理</p>
+<ul>
+<li><p>打开终端，确保在根目录下 然后输入 ：<br><img src="http://o9xc0bh9t.bkt.clouddn.com/14800463961614.jpg" alt=""></p>
+</li>
+<li><p>将目录下的所有文件删除</p>
+</li>
+</ul>
+<p><img src="http://o9xc0bh9t.bkt.clouddn.com/14800464686927.jpg" alt=""></p>
+<p>然后重启Xcode，再次编译，如果还是报错，建议重走 <a href="#使用静态库">使用静态库</a></p>
+
+      
+    </div>
+
+    
+      
+      
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/教程/">教程</a>
+            
+          </div>
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2017/04/18/手机被偷后的一些想法/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">手机丢失后的一些想法</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2016/09/20/iOS 开发中遇到的坑/">
+        <span class="next-text nav-default">iOS 开发中遇到的坑</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:hunter_mz@icloud.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+      
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2015 - 
+    
+    2017
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">HunterMz</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://huntermz.site/2016/11/25/静态库&项目依赖/';
+        this.page.identifier = '2016/11/25/静态库&项目依赖/';
+        this.page.title = '静态库 & 项目依赖';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//huntermz.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.4.x"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.4.x"></script>
+
+  </body>
+</html>
