@@ -36,18 +36,16 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.4.x" />
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.5.0" />
 
 
 
 <link rel="canonical" href="http://huntermz.site/page/3/"/>
 
 
-<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.4.x" />
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.5.0" />
 
 
-
-  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" />
 
 
 
@@ -108,24 +106,6 @@
         </li>
       </a>
     
-      <a href="/tags">
-        <li class="mobile-menu-item">
-          
-          
-            tags
-          
-        </li>
-      </a>
-    
-      <a href="/categories">
-        <li class="mobile-menu-item">
-          
-          
-            categories
-          
-        </li>
-      </a>
-    
   </ul>
 </nav>
 
@@ -142,7 +122,7 @@
           <a class="menu-item-link" href="/">
             
             
-              首页
+              Home
             
           </a>
         </li>
@@ -151,25 +131,7 @@
           <a class="menu-item-link" href="/archives/">
             
             
-              归档
-            
-          </a>
-        </li>
-      
-        <li class="menu-item">
-          <a class="menu-item-link" href="/tags">
-            
-            
-              标签
-            
-          </a>
-        </li>
-      
-        <li class="menu-item">
-          <a class="menu-item-link" href="/categories">
-            
-            
-              分类
+              Archives
             
           </a>
         </li>
@@ -191,7 +153,7 @@
     <header class="post-header">
       <h1 class="post-title">
         
-          <a class="post-link" href="/2016/07/07/多线程和多任务/">多线程和多任务</a>
+          <a class="post-link" href="/2016/07/07/算法/">排序算法</a>
         
       </h1>
 
@@ -220,10 +182,9 @@
         
 
         
-          <h2 id="iOS-提供的多线程方案"><a href="#iOS-提供的多线程方案" class="headerlink" title="iOS 提供的多线程方案"></a>iOS 提供的多线程方案</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">1. Pthreads</div><div class="line">2. NSThread</div><div class="line">3. GCD</div><div class="line">4. NSOperation &amp; NSOperationQueue</div></pre></td></tr></table></figure>
-<p><img src="https://o9xwn216o.qnssl.com/blog-img/1467887537015.png" alt=""></p>
+          <p>此文用来收录常见的排序算法</p>
           <div class="read-more">
-            <a href="/2016/07/07/多线程和多任务/" class="read-more-link">阅读更多</a>
+            <a href="/2016/07/07/算法/" class="read-more-link">Read more..</a>
           </div>
         
       
@@ -275,7 +236,7 @@
 </ul>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">integer: 整形值</div><div class="line">real: 浮点值</div><div class="line">text: 文本字符串</div><div class="line">blob: 二进制数据(比如文件)</div></pre></td></tr></table></figure>
           <div class="read-more">
-            <a href="/2016/07/07/SQL语句的简单使用/" class="read-more-link">阅读更多</a>
+            <a href="/2016/07/07/SQL语句的简单使用/" class="read-more-link">Read more..</a>
           </div>
         
       
@@ -293,7 +254,7 @@
     <header class="post-header">
       <h1 class="post-title">
         
-          <a class="post-link" href="/2016/07/07/算法/">排序算法</a>
+          <a class="post-link" href="/2016/07/07/归档/">数据持久化保存——归档</a>
         
       </h1>
 
@@ -304,7 +265,7 @@
         
           <div class="post-category">
             
-              <a href="/categories/编程基础/">编程基础</a>
+              <a href="/categories/iOS开发/">iOS开发</a>
             
           </div>
         
@@ -322,9 +283,13 @@
         
 
         
-          <p>此文用来收录常见的排序算法</p>
+          <ul>
+<li>首先在使用归档前，要对归档的对象进行编码和解码，代码如下：</li>
+</ul>
+<p>Person.h 文件</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">&lt;Foundation/Foundation.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="comment">// 如果想将一个自定义对象保存到文件中必须实现NSCoding协议</span></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Person</span> : <span class="title">NSObject</span>&lt;<span class="title">NSCoding</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">//姓名</span></div><div class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">copy</span>)<span class="built_in">NSString</span> *name;</div><div class="line"><span class="comment">//年龄</span></div><div class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">assign</span>)<span class="keyword">int</span> age;</div><div class="line"><span class="comment">//身高</span></div><div class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">assign</span>)<span class="keyword">double</span> height;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
           <div class="read-more">
-            <a href="/2016/07/07/算法/" class="read-more-link">阅读更多</a>
+            <a href="/2016/07/07/归档/" class="read-more-link">Read more..</a>
           </div>
         
       
@@ -344,7 +309,7 @@
     
       <a class="prev" href="/page/2/">
         <i class="iconfont icon-left"></i>
-        <span class="prev-text">上一页</span>
+        <span class="prev-text">Prev</span>
       </a>
     
     
@@ -363,7 +328,7 @@
     
       
         
-          <a href="mailto:hunter_mz@icloud.com" class="iconfont icon-email" title="email"></a>
+          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
         
       
     
@@ -397,11 +362,11 @@
 
 <div class="copyright">
   <span class="power-by">
-    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
   </span>
   
   <span class="theme-info">
-    主题 - 
+    Theme - 
     <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
   </span>
 
@@ -430,8 +395,6 @@
 
 
     
-  
-
 
 
 
@@ -445,12 +408,10 @@
   
 
   
-    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
-  
 
 
-    <script type="text/javascript" src="/js/src/even.js?v=2.4.x"></script>
-<script type="text/javascript" src="/js/src/bootstrap.js?v=2.4.x"></script>
+    <script type="text/javascript" src="/js/src/even.js?v=2.5.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.5.0"></script>
 
   </body>
 </html>

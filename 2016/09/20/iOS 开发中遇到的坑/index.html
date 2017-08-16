@@ -38,18 +38,16 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.4.x" />
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.5.0" />
 
 
 
 <link rel="canonical" href="http://huntermz.site/2016/09/20/iOS 开发中遇到的坑/"/>
 
 
-<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.4.x" />
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.5.0" />
 
 
-
-  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" />
 
 
 
@@ -110,24 +108,6 @@
         </li>
       </a>
     
-      <a href="/tags">
-        <li class="mobile-menu-item">
-          
-          
-            tags
-          
-        </li>
-      </a>
-    
-      <a href="/categories">
-        <li class="mobile-menu-item">
-          
-          
-            categories
-          
-        </li>
-      </a>
-    
   </ul>
 </nav>
 
@@ -144,7 +124,7 @@
           <a class="menu-item-link" href="/">
             
             
-              首页
+              Home
             
           </a>
         </li>
@@ -153,25 +133,7 @@
           <a class="menu-item-link" href="/archives/">
             
             
-              归档
-            
-          </a>
-        </li>
-      
-        <li class="menu-item">
-          <a class="menu-item-link" href="/tags">
-            
-            
-              标签
-            
-          </a>
-        </li>
-      
-        <li class="menu-item">
-          <a class="menu-item-link" href="/categories">
-            
-            
-              分类
+              Archives
             
           </a>
         </li>
@@ -212,7 +174,7 @@
     
     
   <div class="post-toc" id="post-toc">
-    <h2 class="post-toc-title">文章目录</h2>
+    <h2 class="post-toc-title">Contents</h2>
     <div class="post-toc-content">
       <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#记录-iOS-开发中遇到的坑，持续更新…"><span class="toc-text">记录 iOS 开发中遇到的坑，持续更新…..</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#iOS10-权限描述-crash"><span class="toc-text">iOS10 权限描述 crash</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#无权限访问此文件"><span class="toc-text">无权限访问此文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Xcode编译时候出现各种诡异的问题"><span class="toc-text">Xcode编译时候出现各种诡异的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#横屏状态栏不显示"><span class="toc-text">横屏状态栏不显示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#手机平放横屏竖屏判断"><span class="toc-text">手机平放横屏竖屏判断</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#监听屏幕旋转"><span class="toc-text">监听屏幕旋转</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#判断当前控制器是-push-进来的还是-present-进来"><span class="toc-text">判断当前控制器是 push 进来的还是 present 进来</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#审核"><span class="toc-text">审核</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Missing-Push-Notification-Entitlement"><span class="toc-text">Missing Push Notification Entitlement</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#内购商品超过99-99美元被拒绝"><span class="toc-text">内购商品超过99.99美元被拒绝</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IDFA"><span class="toc-text">IDFA</span></a></li></ol></li></ol>
     </div>
@@ -301,13 +263,13 @@
       <a class="prev" href="/2016/11/25/静态库&项目依赖/">
         <i class="iconfont icon-left"></i>
         <span class="prev-text nav-default">静态库 & 项目依赖</span>
-        <span class="prev-text nav-mobile">上一篇</span>
+        <span class="prev-text nav-mobile">Prev</span>
       </a>
     
     
       <a class="next" href="/2016/09/02/RxSwfit 笔记/">
         <span class="next-text nav-default">RxSwift 操作符自查笔记</span>
-        <span class="prev-text nav-mobile">下一篇</span>
+        <span class="prev-text nav-mobile">Next</span>
         <i class="iconfont icon-right"></i>
       </a>
     
@@ -342,7 +304,7 @@
     
       
         
-          <a href="mailto:hunter_mz@icloud.com" class="iconfont icon-email" title="email"></a>
+          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
         
       
     
@@ -376,11 +338,11 @@
 
 <div class="copyright">
   <span class="power-by">
-    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+    Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a>
   </span>
   
   <span class="theme-info">
-    主题 - 
+    Theme - 
     <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
   </span>
 
@@ -427,8 +389,6 @@
 
 
     
-  
-
 
 
 
@@ -442,12 +402,10 @@
   
 
   
-    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
-  
 
 
-    <script type="text/javascript" src="/js/src/even.js?v=2.4.x"></script>
-<script type="text/javascript" src="/js/src/bootstrap.js?v=2.4.x"></script>
+    <script type="text/javascript" src="/js/src/even.js?v=2.5.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.5.0"></script>
 
   </body>
 </html>
