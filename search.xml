@@ -4,6 +4,134 @@
   
     
     <entry>
+      <title><![CDATA[iOS基础知识总结一]]></title>
+      <url>http://huntermz.site/2017/08/16/iOS%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93%E4%B8%80/</url>
+      <content type="html"><![CDATA[<h1 id="堆栈"><a href="#堆栈" class="headerlink" title="堆栈"></a>堆栈</h1><ul>
+<li><p>管理方式: 栈由编译器自动管理；堆由程序员手动管理。</p>
+</li>
+<li><p>大小： </p>
+<ul>
+<li>栈：在Windows下，栈是向低地址扩展的数据结构，是一块连续的内存区域。意思是，栈顶的地址和栈的最大容量是系统预先规定好的。</li>
+<li>堆：堆是向高地址扩展的数据结构，是不连续的内存区域。这是由于系统是用链表来存储空闲内存地址的。而链表的遍历方向是由低地址向高地址。堆的大小取决于计算机的虚拟内存。由此可见，堆可以获得更大更灵活的内存空间。</li>
+</ul>
+</li>
+<li><p>碎片问题：<br>  对于堆来说，频繁的new/delete 会造成内存空间的不连续，从而造成大量的碎片，是程序效率降低。栈则不存在这个问题。因为栈是先进后出的队列，永远不可能有一个内存块从栈中间弹出。</p>
+</li>
+<li><p>分配方式：<br>  堆是动态分配的，没有静态分配的堆。<br>  栈有两种分配方式：</p>
+<ul>
+<li>静态分配：编译器完成的，比如局部变量的分配。</li>
+<li>动态分配：由 <code>alloc</code> 函数进行分配。区别于堆的动态分配的是，栈的动态分配由编译器完成，无需手动实现。</li>
+</ul>
+</li>
+<li><p>分配效率：<br>  栈是机器系统提供的数据结构，计算机底层对栈提供支持，分配专门的寄存器存放栈的地址，压栈出栈都有专门的指令执行，因此效率高；堆则是C/C++函数库提供的，机制很复杂。</p>
+</li>
+</ul>
+<h1 id="Core-Foundation-的内存管理"><a href="#Core-Foundation-的内存管理" class="headerlink" title="Core Foundation 的内存管理"></a>Core Foundation 的内存管理</h1><ul>
+<li>凡是带有Create、Copy、Retain 等字眼的函数，创建出来的对象，都需要在最后做一次release。</li>
+<li>比如：<code>CFRunLoopObserverCreate release</code></li>
+</ul>
+<h1 id="OC-的反射机制"><a href="#OC-的反射机制" class="headerlink" title="OC 的反射机制"></a>OC 的反射机制</h1><ul>
+<li><p>Class 反射：</p>
+<ul>
+<li><p>通过类名的字符串实例化对象：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Class tempClass = <span class="built_in">NSClassFromString</span>(<span class="string">@"student"</span>);</div><div class="line">Student *stu = [[tempClass alloc] init]</div></pre></td></tr></table></figure>
+</li>
+<li><p>将类名变成字符串：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Class class =[Student class]; </div><div class="line">NSString *className = NSStringFromClass(class);</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>SELL 的反射</p>
+<ul>
+<li><p>通过方法的字符串实例化方法：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">SEL selector = <span class="built_in">NSSelectorFromClass</span>(<span class="string">@"setName"</span>);  </div><div class="line">[stu performSelector:selector withObject:<span class="string">@"Mike"</span>];</div></pre></td></tr></table></figure>
+</li>
+<li><p>将方法变成字符串</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSStringFomrSelector</span>(<span class="keyword">@selector</span>*(setName:))</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="协议中能否定义成员变量？"><a href="#协议中能否定义成员变量？" class="headerlink" title="协议中能否定义成员变量？"></a>协议中能否定义成员变量？</h1><ul>
+<li>可以，但是只能在头文件中声明，编译器不会自动生成实例变量。需要自己处理 <code>getter</code>和<code>setter</code> 方法</li>
+</ul>
+<h1 id="如何理解Objective-C是动态运行时语言"><a href="#如何理解Objective-C是动态运行时语言" class="headerlink" title="如何理解Objective-C是动态运行时语言"></a>如何理解Objective-C是动态运行时语言</h1><ul>
+<li>将数据类型的确定、调用类别对象指定的方法由编译时，推迟到运行时。</li>
+<li>多态：不同对象以自己的方式响应相同的消息。</li>
+</ul>
+<h1 id="readwrite、readonly、-assign、-retain、-cop、nonatomic"><a href="#readwrite、readonly、-assign、-retain、-cop、nonatomic" class="headerlink" title="readwrite、readonly、 assign、 retain、 cop、nonatomic"></a>readwrite、readonly、 assign、 retain、 cop、nonatomic</h1><ul>
+<li>readwrite：可读可写.要生成getter 和 setter 方法；</li>
+<li>readonly：只读。成getter方法。属性不可在类外修改。</li>
+<li>assign：赋值。用于基本数据类型的属性修饰。是一个property的默认属性。</li>
+<li>copy：修饰string类型。在setter方法里，将传入的对象复制一份，再赋值。</li>
+<li>nonatomic：非原子操作，决定编译器生成的setter 和 getter 是否是原子操作。</li>
+<li>atomic：表示多线安全，一般不使用。</li>
+<li><p>retain：持有。setter方法中先保留参数，再赋值，并且传入参数的retaincount+1</p>
+</li>
+<li><p>strong：修饰一般对象。和retain同义。先保留</p>
+</li>
+<li>weak：编译器将为weak修饰的property生成带__weak所有权修饰符的实例变量。</li>
+</ul>
+<h1 id="NotificationCenter、KVC、KVO、Delegate"><a href="#NotificationCenter、KVC、KVO、Delegate" class="headerlink" title="NotificationCenter、KVC、KVO、Delegate"></a>NotificationCenter、KVC、KVO、Delegate</h1><ul>
+<li>KVO：一对多，键值观察。</li>
+<li><p>KVC：键值编码，一个对象在调用setValue的时候:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">graph TB</div><div class="line">A[查找key对应的set方法]--&gt;|YES| B[调用set方法]</div><div class="line">A--&gt;|NO| C[查找_key的成员变量是否存在]</div><div class="line">C--&gt;|YES| D[赋值]</div><div class="line">C--&gt;|NO| E[查找相同名称的key]</div><div class="line">E--&gt; |YES| F[赋值]</div><div class="line">E--&gt; |NO| G[调用`valueForUndefinedkey` 和 `setValue: forUndefinedKey`]</div></pre></td></tr></table></figure>
+</li>
+<li><p>Delegate：发送者和接受者是直接的一对一的关系。允许一个类在某些特定时刻通知到其他类，而不需要获取那些类的指针，接受者可以改变发送者的行为。</p>
+</li>
+<li><p>Notification:观察者模式，通常发送者和接受者的关系是间接的多对多关系。消息的发送者告知接受者事件已经发生或者将要发送。接受者不能反过来影响发送者的行为。</p>
+</li>
+<li><p>区别     </p>
+<ul>
+<li>delegate 效率比 NSNotification 高。</li>
+<li>delegate 比 Notification 更直接，需要关注返回值。</li>
+<li>两个模块联系不是很紧密，就用NSNotification 传值，例如多线程间的传值。</li>
+</ul>
+</li>
+</ul>
+<h1 id="Category-和-Extention"><a href="#Category-和-Extention" class="headerlink" title="Category 和 Extention"></a>Category 和 Extention</h1><ul>
+<li>类别：在没有原类 .m  文件之外给原类添加方法，但不能给原类添加成员变量，添加的成员变量不能初始化。</li>
+<li>扩展：一种特殊形式的类别。在一个类的 .m 文件里声明变量和方法。可以给某个类添加私有方法和私有变量。</li>
+<li>区别：<ul>
+<li>扩展可以添加属性和方法，并且添加的方法是必须实现的。</li>
+<li>类别可以再不知道不改变原来代码的情况下往原有类添加新的方法，只能添加，不能删除修改。</li>
+<li>如果类别和原有类中的方法产生命名冲突，则类别的方法会覆盖原来的方法，即类别具有更高的优先级。</li>
+</ul>
+</li>
+</ul>
+<h1 id="潜拷贝和深拷贝"><a href="#潜拷贝和深拷贝" class="headerlink" title="潜拷贝和深拷贝"></a>潜拷贝和深拷贝</h1><ul>
+<li>潜拷贝：只复制对象的指针，而不复制对象本身，对象内容有改变，则复制之后的结果也会变。</li>
+<li>深拷贝：复制对象本身。</li>
+</ul>
+<h1 id="nil、Nil、NULL、NSNull"><a href="#nil、Nil、NULL、NSNull" class="headerlink" title="nil、Nil、NULL、NSNull"></a>nil、Nil、NULL、NSNull</h1><ul>
+<li>nil：针对Objective-C中的对象使用，表示空对象。nil对象调用任何方法表示什么也不执行，也不会崩溃。</li>
+<li>Nil：针对Objective-C中的类使用，标识空类（<code>Class myClass = Nil</code>）。</li>
+<li>NULL：对于C语言指针使用的，表示空指针。</li>
+<li>NSNull：类类型，用于标识空的占位对象，可以用来给服务端接口传空值。</li>
+</ul>
+<h1 id="block-weak-修饰的区别"><a href="#block-weak-修饰的区别" class="headerlink" title="block / weak 修饰的区别"></a><strong>block / </strong>weak 修饰的区别</h1><ul>
+<li><code>__block</code> 在 arc 和 mrc 环境下都能用，可以修饰对象，也能修饰基本数据类型。</li>
+<li><code>__weak</code> 只能用在 arc 环境下，只能修饰对象，不能修饰基本数据类型。</li>
+<li><code>__block</code> 对象可以在Block 中重新赋值，<code>__weak</code> 不行。</li>
+</ul>
+]]></content>
+      
+        <categories>
+            
+            <category> iOS开发 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[近几日面试有感]]></title>
       <url>http://huntermz.site/2017/07/07/%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93/</url>
       <content type="html"><![CDATA[<h1 id="萌生了跳槽的念头"><a href="#萌生了跳槽的念头" class="headerlink" title="萌生了跳槽的念头"></a>萌生了跳槽的念头</h1><p>从去年毕业到现在，在公司一年零两个月了，想着工资也该涨涨了。抱着试一试的态度跟老大提了，因为知道公司去年因为好多因素效益不好，心里其实没有抱多大希望。果不其然，没有同意。更戏剧的是涨薪没申请下来，却申请来了加班[此处有一个捂脸哭的表情]。于是萌生了跳槽的念头。</p>
@@ -550,6 +678,29 @@
     </entry>
     
     <entry>
+      <title><![CDATA[排序算法]]></title>
+      <url>http://huntermz.site/2016/07/07/%E7%AE%97%E6%B3%95/</url>
+      <content type="html"><![CDATA[<p>此文用来收录常见的排序算法</p>
+<a id="more"></a>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div></pre></td><td class="code"><pre><div class="line"><span class="comment">///  冒泡排序</span></div><div class="line"><span class="comment">///  - language: Swift</span></div><div class="line"><span class="comment">///  - parameter array: 要排序的数组</span></div><div class="line"><span class="comment">///</span></div><div class="line"><span class="comment">///  - returns: 排序后的数组</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">BubbleSort</span><span class="params">(array: [Int])</span></span> -&gt; [<span class="type">Int</span>] &#123;</div><div class="line">   <span class="keyword">var</span> <span class="built_in">count</span> = <span class="number">0</span></div><div class="line">   <span class="keyword">var</span> source = array</div><div class="line">   <span class="keyword">for</span> i <span class="keyword">in</span> <span class="number">0</span>..&lt;source.<span class="built_in">count</span> &#123;</div><div class="line">       <span class="keyword">for</span> j <span class="keyword">in</span> <span class="number">0</span>..&lt;source.<span class="built_in">count</span> - i - <span class="number">1</span> &#123;</div><div class="line">           <span class="built_in">count</span> += <span class="number">1</span></div><div class="line">           <span class="keyword">if</span> source[j] &gt; source[j + <span class="number">1</span>] &#123;</div><div class="line">               <span class="keyword">let</span> temp = source[j]</div><div class="line">               source[j] = source[j + <span class="number">1</span>]</div><div class="line">               source[j + <span class="number">1</span>] = temp</div><div class="line">           &#125;</div><div class="line">           </div><div class="line">       &#125;</div><div class="line">   &#125;</div><div class="line">   <span class="keyword">return</span> source</div><div class="line">&#125;</div><div class="line">    </div><div class="line"><span class="comment">///  选择排序</span></div><div class="line"><span class="comment">///  - language: Swift</span></div><div class="line"><span class="comment">///  - parameter array: 要排序的数组</span></div><div class="line"><span class="comment">///</span></div><div class="line"><span class="comment">///  - returns: 排序后的数组</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">SelectionSort</span><span class="params">(array: [Int])</span></span> -&gt; [<span class="type">Int</span>] &#123;</div><div class="line">   </div><div class="line">   <span class="keyword">var</span> source = array</div><div class="line">   </div><div class="line">   <span class="keyword">for</span> i <span class="keyword">in</span> <span class="number">0</span>..&lt;source.<span class="built_in">count</span>&#123;</div><div class="line">       <span class="keyword">var</span> <span class="built_in">min</span> = i</div><div class="line">       <span class="keyword">for</span> j <span class="keyword">in</span> i..&lt;source.<span class="built_in">count</span> &#123;</div><div class="line">           <span class="keyword">if</span> source[j] &lt; source[<span class="built_in">min</span>] &#123;</div><div class="line">               <span class="built_in">min</span> = j</div><div class="line">           &#125;</div><div class="line">       &#125;</div><div class="line">       </div><div class="line">       <span class="keyword">if</span> i != <span class="built_in">min</span> &#123;</div><div class="line">           <span class="keyword">let</span> temp = source[i]</div><div class="line">           source[i] = source[<span class="built_in">min</span>]</div><div class="line">           source[<span class="built_in">min</span>] = temp</div><div class="line">           </div><div class="line">       &#125;</div><div class="line">   &#125;</div><div class="line">   <span class="keyword">return</span> source</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">///  快速排序</span></div><div class="line"><span class="comment">///  - language: Swift</span></div><div class="line"><span class="comment">///  - parameter array: 要排序的数组</span></div><div class="line"><span class="comment">///  - 思路：辅助空间</span></div><div class="line"><span class="comment">///  - returns: 排序后的数组</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">QuickSort</span><span class="params">(data: [NSInteger])</span></span> -&gt; [<span class="type">NSInteger</span>] &#123;</div><div class="line">   <span class="keyword">if</span> data.<span class="built_in">count</span> &lt;= <span class="number">1</span> &#123;</div><div class="line">       <span class="keyword">return</span> data</div><div class="line">   &#125;</div><div class="line">   </div><div class="line">   <span class="keyword">let</span> pivot = data[data.<span class="built_in">count</span> - <span class="number">1</span>]   <span class="comment">// 取数组的最后一个数为基准值</span></div><div class="line">   <span class="keyword">var</span> <span class="keyword">left</span> = [<span class="type">NSInteger</span>]()           <span class="comment">// 存放比基准值小的数</span></div><div class="line">   <span class="keyword">var</span> <span class="keyword">right</span> = [<span class="type">NSInteger</span>]()          <span class="comment">// 存放比基准值打的数</span></div><div class="line">   </div><div class="line">   <span class="comment">// 遍历数组</span></div><div class="line">   <span class="keyword">for</span> index <span class="keyword">in</span> <span class="number">0</span>..&lt;data.<span class="built_in">count</span> - <span class="number">1</span> &#123;</div><div class="line">       <span class="keyword">if</span> data[index] &lt; pivot &#123;       <span class="comment">// 如果小就放到左边</span></div><div class="line">           <span class="keyword">left</span>.append(data[index])</div><div class="line">       &#125; <span class="keyword">else</span> &#123;                       <span class="comment">// 如果大就放在右边</span></div><div class="line">           <span class="keyword">right</span>.append(data[index])</div><div class="line">       &#125;</div><div class="line">   &#125;</div><div class="line">   </div><div class="line">   <span class="keyword">var</span> result = <span class="type">QuickSort</span>(<span class="keyword">left</span>)         <span class="comment">// 对左边的数组进行快速排序</span></div><div class="line">   result.append(pivot)                 <span class="comment">// 在排序后的数组后拼接基准值</span></div><div class="line">   <span class="keyword">let</span> rightResult = <span class="type">QuickSort</span>(<span class="keyword">right</span>)   <span class="comment">// 对右边的数组进行快速排序</span></div><div class="line">   result.appendContentsOf(rightResult) <span class="comment">// 左边的数组拼接右边的数组即最终的结果</span></div><div class="line">   <span class="keyword">return</span> result</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+]]></content>
+      
+        <categories>
+            
+            <category> 编程基础 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 算法 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[多线程和多任务]]></title>
       <url>http://huntermz.site/2016/07/07/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%92%8C%E5%A4%9A%E4%BB%BB%E5%8A%A1/</url>
       <content type="html"><![CDATA[<h2 id="iOS-提供的多线程方案"><a href="#iOS-提供的多线程方案" class="headerlink" title="iOS 提供的多线程方案"></a>iOS 提供的多线程方案</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">1. Pthreads</div><div class="line">2. NSThread</div><div class="line">3. GCD</div><div class="line">4. NSOperation &amp; NSOperationQueue</div></pre></td></tr></table></figure>
@@ -633,65 +784,6 @@
     </entry>
     
     <entry>
-      <title><![CDATA[数据持久化保存——归档]]></title>
-      <url>http://huntermz.site/2016/07/07/%E5%BD%92%E6%A1%A3/</url>
-      <content type="html"><![CDATA[<ul>
-<li>首先在使用归档前，要对归档的对象进行编码和解码，代码如下：</li>
-</ul>
-<p>Person.h 文件</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">&lt;Foundation/Foundation.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="comment">// 如果想将一个自定义对象保存到文件中必须实现NSCoding协议</span></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Person</span> : <span class="title">NSObject</span>&lt;<span class="title">NSCoding</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">//姓名</span></div><div class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">copy</span>)<span class="built_in">NSString</span> *name;</div><div class="line"><span class="comment">//年龄</span></div><div class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">assign</span>)<span class="keyword">int</span> age;</div><div class="line"><span class="comment">//身高</span></div><div class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">assign</span>)<span class="keyword">double</span> height;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
-<a id="more"></a>
-<p>Person.m 文件</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">"Person.h"</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">Person</span></span></div><div class="line"></div><div class="line"> <span class="comment">// 当将一个自定义对象保存到文件的时候就会调用该方法</span></div><div class="line"> <span class="comment">// 在该方法中说明如何存储自定义对象的属性</span></div><div class="line"> <span class="comment">// 也就说在该方法中说清楚存储自定义对象的哪些属性</span></div><div class="line"> -(<span class="keyword">void</span>)encodeWithCoder:(<span class="built_in">NSCoder</span> *)aCoder</div><div class="line"> &#123;</div><div class="line">     <span class="built_in">NSLog</span>(<span class="string">@"调用了encodeWithCoder:方法"</span>);</div><div class="line">     [aCoder encodeObject:<span class="keyword">self</span>.name forKey:<span class="string">@"name"</span>];</div><div class="line">     [aCoder encodeInteger:<span class="keyword">self</span>.age forKey:<span class="string">@"age"</span>];</div><div class="line">     [aCoder encodeDouble:<span class="keyword">self</span>.height forKey:<span class="string">@"height"</span>];</div><div class="line"> &#125;</div><div class="line"></div><div class="line"></div><div class="line"> <span class="comment">// 当从文件中读取一个对象的时候就会调用该方法</span></div><div class="line"> <span class="comment">// 在该方法中说明如何读取保存在文件中的对象</span></div><div class="line"> <span class="comment">// 也就是说在该方法中说清楚怎么读取文件中的对象</span></div><div class="line"> -(<span class="keyword">id</span>)initWithCoder:(<span class="built_in">NSCoder</span> *)aDecoder</div><div class="line"> &#123;</div><div class="line">     <span class="built_in">NSLog</span>(<span class="string">@"调用了initWithCoder:方法"</span>);</div><div class="line">     <span class="comment">//注意：在构造方法中需要先初始化父类的方法</span></div><div class="line">     <span class="keyword">if</span> (<span class="keyword">self</span>=[<span class="keyword">super</span> init]) &#123;</div><div class="line">         <span class="keyword">self</span>.name=[aDecoder decodeObjectForKey:<span class="string">@"name"</span>];</div><div class="line">         <span class="keyword">self</span>.age=[aDecoder decodeIntegerForKey:<span class="string">@"age"</span>];</div><div class="line">         <span class="keyword">self</span>.height=[aDecoder decodeDoubleForKey:<span class="string">@"height"</span>];</div><div class="line">     &#125;</div><div class="line">     <span class="keyword">return</span> <span class="keyword">self</span>;</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> <span class="keyword">@end</span></div></pre></td></tr></table></figure>
-<ul>
-<li>归档过程</li>
-</ul>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 1.创建对象</span></div><div class="line">Person *p=[[Person alloc]init];</div><div class="line">p.name=<span class="string">@"Hunter"</span>;</div><div class="line">p.age=<span class="number">23</span>;</div><div class="line">p.height=<span class="number">1.7</span>;</div><div class="line"></div><div class="line"><span class="comment">// 2.获取文件路径</span></div><div class="line"><span class="built_in">NSString</span> *docPath=[<span class="built_in">NSSearchPathForDirectoriesInDomains</span>(<span class="built_in">NSDocumentDirectory</span>, <span class="built_in">NSUserDomainMask</span>, <span class="literal">YES</span>)lastObject];</div><div class="line"><span class="built_in">NSString</span> *path=[docPath stringByAppendingPathComponent:<span class="string">@"person.file"</span>];</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"path=%@"</span>,path);</div><div class="line"></div><div class="line"><span class="comment">// 3.将自定义的对象保存到文件中</span></div><div class="line">[<span class="built_in">NSKeyedArchiver</span> archiveRootObject:p toFile:path];</div></pre></td></tr></table></figure>
-<ul>
-<li>解档过程</li>
-</ul>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 1.获取文件路径</span></div><div class="line"><span class="built_in">NSString</span> *docPath=[<span class="built_in">NSSearchPathForDirectoriesInDomains</span>(<span class="built_in">NSDocumentDirectory</span>, <span class="built_in">NSUserDomainMask</span>, <span class="literal">YES</span>)lastObject];</div><div class="line"><span class="built_in">NSString</span> *path=[docPath stringByAppendingPathComponent:<span class="string">@"person.yangyang"</span>];</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"path=%@"</span>,path);</div><div class="line"></div><div class="line"><span class="comment">//2.从文件中读取对象</span></div><div class="line">Person *p=[<span class="built_in">NSKeyedUnarchiver</span> unarchiveObjectWithFile:path];</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"%@,%d,%.1f"</span>,p.name,p.age,p.height);</div></pre></td></tr></table></figure>
-]]></content>
-      
-        <categories>
-            
-            <category> iOS开发 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 数据持久化保存 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[排序算法]]></title>
-      <url>http://huntermz.site/2016/07/07/%E7%AE%97%E6%B3%95/</url>
-      <content type="html"><![CDATA[<p>此文用来收录常见的排序算法</p>
-<a id="more"></a>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div></pre></td><td class="code"><pre><div class="line"><span class="comment">///  冒泡排序</span></div><div class="line"><span class="comment">///  - language: Swift</span></div><div class="line"><span class="comment">///  - parameter array: 要排序的数组</span></div><div class="line"><span class="comment">///</span></div><div class="line"><span class="comment">///  - returns: 排序后的数组</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">BubbleSort</span><span class="params">(array: [Int])</span></span> -&gt; [<span class="type">Int</span>] &#123;</div><div class="line">   <span class="keyword">var</span> <span class="built_in">count</span> = <span class="number">0</span></div><div class="line">   <span class="keyword">var</span> source = array</div><div class="line">   <span class="keyword">for</span> i <span class="keyword">in</span> <span class="number">0</span>..&lt;source.<span class="built_in">count</span> &#123;</div><div class="line">       <span class="keyword">for</span> j <span class="keyword">in</span> <span class="number">0</span>..&lt;source.<span class="built_in">count</span> - i - <span class="number">1</span> &#123;</div><div class="line">           <span class="built_in">count</span> += <span class="number">1</span></div><div class="line">           <span class="keyword">if</span> source[j] &gt; source[j + <span class="number">1</span>] &#123;</div><div class="line">               <span class="keyword">let</span> temp = source[j]</div><div class="line">               source[j] = source[j + <span class="number">1</span>]</div><div class="line">               source[j + <span class="number">1</span>] = temp</div><div class="line">           &#125;</div><div class="line">           </div><div class="line">       &#125;</div><div class="line">   &#125;</div><div class="line">   <span class="keyword">return</span> source</div><div class="line">&#125;</div><div class="line">    </div><div class="line"><span class="comment">///  选择排序</span></div><div class="line"><span class="comment">///  - language: Swift</span></div><div class="line"><span class="comment">///  - parameter array: 要排序的数组</span></div><div class="line"><span class="comment">///</span></div><div class="line"><span class="comment">///  - returns: 排序后的数组</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">SelectionSort</span><span class="params">(array: [Int])</span></span> -&gt; [<span class="type">Int</span>] &#123;</div><div class="line">   </div><div class="line">   <span class="keyword">var</span> source = array</div><div class="line">   </div><div class="line">   <span class="keyword">for</span> i <span class="keyword">in</span> <span class="number">0</span>..&lt;source.<span class="built_in">count</span>&#123;</div><div class="line">       <span class="keyword">var</span> <span class="built_in">min</span> = i</div><div class="line">       <span class="keyword">for</span> j <span class="keyword">in</span> i..&lt;source.<span class="built_in">count</span> &#123;</div><div class="line">           <span class="keyword">if</span> source[j] &lt; source[<span class="built_in">min</span>] &#123;</div><div class="line">               <span class="built_in">min</span> = j</div><div class="line">           &#125;</div><div class="line">       &#125;</div><div class="line">       </div><div class="line">       <span class="keyword">if</span> i != <span class="built_in">min</span> &#123;</div><div class="line">           <span class="keyword">let</span> temp = source[i]</div><div class="line">           source[i] = source[<span class="built_in">min</span>]</div><div class="line">           source[<span class="built_in">min</span>] = temp</div><div class="line">           </div><div class="line">       &#125;</div><div class="line">   &#125;</div><div class="line">   <span class="keyword">return</span> source</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">///  快速排序</span></div><div class="line"><span class="comment">///  - language: Swift</span></div><div class="line"><span class="comment">///  - parameter array: 要排序的数组</span></div><div class="line"><span class="comment">///  - 思路：辅助空间</span></div><div class="line"><span class="comment">///  - returns: 排序后的数组</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">QuickSort</span><span class="params">(data: [NSInteger])</span></span> -&gt; [<span class="type">NSInteger</span>] &#123;</div><div class="line">   <span class="keyword">if</span> data.<span class="built_in">count</span> &lt;= <span class="number">1</span> &#123;</div><div class="line">       <span class="keyword">return</span> data</div><div class="line">   &#125;</div><div class="line">   </div><div class="line">   <span class="keyword">let</span> pivot = data[data.<span class="built_in">count</span> - <span class="number">1</span>]   <span class="comment">// 取数组的最后一个数为基准值</span></div><div class="line">   <span class="keyword">var</span> <span class="keyword">left</span> = [<span class="type">NSInteger</span>]()           <span class="comment">// 存放比基准值小的数</span></div><div class="line">   <span class="keyword">var</span> <span class="keyword">right</span> = [<span class="type">NSInteger</span>]()          <span class="comment">// 存放比基准值打的数</span></div><div class="line">   </div><div class="line">   <span class="comment">// 遍历数组</span></div><div class="line">   <span class="keyword">for</span> index <span class="keyword">in</span> <span class="number">0</span>..&lt;data.<span class="built_in">count</span> - <span class="number">1</span> &#123;</div><div class="line">       <span class="keyword">if</span> data[index] &lt; pivot &#123;       <span class="comment">// 如果小就放到左边</span></div><div class="line">           <span class="keyword">left</span>.append(data[index])</div><div class="line">       &#125; <span class="keyword">else</span> &#123;                       <span class="comment">// 如果大就放在右边</span></div><div class="line">           <span class="keyword">right</span>.append(data[index])</div><div class="line">       &#125;</div><div class="line">   &#125;</div><div class="line">   </div><div class="line">   <span class="keyword">var</span> result = <span class="type">QuickSort</span>(<span class="keyword">left</span>)         <span class="comment">// 对左边的数组进行快速排序</span></div><div class="line">   result.append(pivot)                 <span class="comment">// 在排序后的数组后拼接基准值</span></div><div class="line">   <span class="keyword">let</span> rightResult = <span class="type">QuickSort</span>(<span class="keyword">right</span>)   <span class="comment">// 对右边的数组进行快速排序</span></div><div class="line">   result.appendContentsOf(rightResult) <span class="comment">// 左边的数组拼接右边的数组即最终的结果</span></div><div class="line">   <span class="keyword">return</span> result</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-]]></content>
-      
-        <categories>
-            
-            <category> 编程基础 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 算法 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[SQL语句的简单使用]]></title>
       <url>http://huntermz.site/2016/07/07/SQL%E8%AF%AD%E5%8F%A5%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/</url>
       <content type="html"><![CDATA[<ul>
@@ -755,6 +847,42 @@
         <tags>
             
             <tag> 数据库 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[数据持久化保存——归档]]></title>
+      <url>http://huntermz.site/2016/07/07/%E5%BD%92%E6%A1%A3/</url>
+      <content type="html"><![CDATA[<ul>
+<li>首先在使用归档前，要对归档的对象进行编码和解码，代码如下：</li>
+</ul>
+<p>Person.h 文件</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">&lt;Foundation/Foundation.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="comment">// 如果想将一个自定义对象保存到文件中必须实现NSCoding协议</span></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Person</span> : <span class="title">NSObject</span>&lt;<span class="title">NSCoding</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">//姓名</span></div><div class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">copy</span>)<span class="built_in">NSString</span> *name;</div><div class="line"><span class="comment">//年龄</span></div><div class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">assign</span>)<span class="keyword">int</span> age;</div><div class="line"><span class="comment">//身高</span></div><div class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">assign</span>)<span class="keyword">double</span> height;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>Person.m 文件</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">"Person.h"</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">Person</span></span></div><div class="line"></div><div class="line"> <span class="comment">// 当将一个自定义对象保存到文件的时候就会调用该方法</span></div><div class="line"> <span class="comment">// 在该方法中说明如何存储自定义对象的属性</span></div><div class="line"> <span class="comment">// 也就说在该方法中说清楚存储自定义对象的哪些属性</span></div><div class="line"> -(<span class="keyword">void</span>)encodeWithCoder:(<span class="built_in">NSCoder</span> *)aCoder</div><div class="line"> &#123;</div><div class="line">     <span class="built_in">NSLog</span>(<span class="string">@"调用了encodeWithCoder:方法"</span>);</div><div class="line">     [aCoder encodeObject:<span class="keyword">self</span>.name forKey:<span class="string">@"name"</span>];</div><div class="line">     [aCoder encodeInteger:<span class="keyword">self</span>.age forKey:<span class="string">@"age"</span>];</div><div class="line">     [aCoder encodeDouble:<span class="keyword">self</span>.height forKey:<span class="string">@"height"</span>];</div><div class="line"> &#125;</div><div class="line"></div><div class="line"></div><div class="line"> <span class="comment">// 当从文件中读取一个对象的时候就会调用该方法</span></div><div class="line"> <span class="comment">// 在该方法中说明如何读取保存在文件中的对象</span></div><div class="line"> <span class="comment">// 也就是说在该方法中说清楚怎么读取文件中的对象</span></div><div class="line"> -(<span class="keyword">id</span>)initWithCoder:(<span class="built_in">NSCoder</span> *)aDecoder</div><div class="line"> &#123;</div><div class="line">     <span class="built_in">NSLog</span>(<span class="string">@"调用了initWithCoder:方法"</span>);</div><div class="line">     <span class="comment">//注意：在构造方法中需要先初始化父类的方法</span></div><div class="line">     <span class="keyword">if</span> (<span class="keyword">self</span>=[<span class="keyword">super</span> init]) &#123;</div><div class="line">         <span class="keyword">self</span>.name=[aDecoder decodeObjectForKey:<span class="string">@"name"</span>];</div><div class="line">         <span class="keyword">self</span>.age=[aDecoder decodeIntegerForKey:<span class="string">@"age"</span>];</div><div class="line">         <span class="keyword">self</span>.height=[aDecoder decodeDoubleForKey:<span class="string">@"height"</span>];</div><div class="line">     &#125;</div><div class="line">     <span class="keyword">return</span> <span class="keyword">self</span>;</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> <span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<ul>
+<li>归档过程</li>
+</ul>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 1.创建对象</span></div><div class="line">Person *p=[[Person alloc]init];</div><div class="line">p.name=<span class="string">@"Hunter"</span>;</div><div class="line">p.age=<span class="number">23</span>;</div><div class="line">p.height=<span class="number">1.7</span>;</div><div class="line"></div><div class="line"><span class="comment">// 2.获取文件路径</span></div><div class="line"><span class="built_in">NSString</span> *docPath=[<span class="built_in">NSSearchPathForDirectoriesInDomains</span>(<span class="built_in">NSDocumentDirectory</span>, <span class="built_in">NSUserDomainMask</span>, <span class="literal">YES</span>)lastObject];</div><div class="line"><span class="built_in">NSString</span> *path=[docPath stringByAppendingPathComponent:<span class="string">@"person.file"</span>];</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"path=%@"</span>,path);</div><div class="line"></div><div class="line"><span class="comment">// 3.将自定义的对象保存到文件中</span></div><div class="line">[<span class="built_in">NSKeyedArchiver</span> archiveRootObject:p toFile:path];</div></pre></td></tr></table></figure>
+<ul>
+<li>解档过程</li>
+</ul>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 1.获取文件路径</span></div><div class="line"><span class="built_in">NSString</span> *docPath=[<span class="built_in">NSSearchPathForDirectoriesInDomains</span>(<span class="built_in">NSDocumentDirectory</span>, <span class="built_in">NSUserDomainMask</span>, <span class="literal">YES</span>)lastObject];</div><div class="line"><span class="built_in">NSString</span> *path=[docPath stringByAppendingPathComponent:<span class="string">@"person.yangyang"</span>];</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"path=%@"</span>,path);</div><div class="line"></div><div class="line"><span class="comment">//2.从文件中读取对象</span></div><div class="line">Person *p=[<span class="built_in">NSKeyedUnarchiver</span> unarchiveObjectWithFile:path];</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"%@,%d,%.1f"</span>,p.name,p.age,p.height);</div></pre></td></tr></table></figure>
+]]></content>
+      
+        <categories>
+            
+            <category> iOS开发 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 数据持久化保存 </tag>
             
         </tags>
         

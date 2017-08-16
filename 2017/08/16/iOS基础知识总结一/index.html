@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="iOS基础知识总结一"/>
+
+
+
+
+  <meta name="keywords" content="笔记, HunterMz's  Blog" />
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="HunterMz's  Blog">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.4.x" />
+
+
+
+<link rel="canonical" href="http://huntermz.site/2017/08/16/iOS基础知识总结一/"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.4.x" />
+
+
+
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+    <title> iOS基础知识总结一 - HunterMz's  Blog </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">HunterMz's  Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            Home
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            Archives
+          
+        </li>
+      </a>
+    
+      <a href="/tags">
+        <li class="mobile-menu-item">
+          
+          
+            tags
+          
+        </li>
+      </a>
+    
+      <a href="/categories">
+        <li class="mobile-menu-item">
+          
+          
+            categories
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">HunterMz's  Blog</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            
+            
+              标签
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/categories">
+            
+            
+              分类
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          iOS基础知识总结一
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2017-08-16
+        </span>
+        
+          <div class="post-category">
+            
+              <a href="/categories/iOS开发/">iOS开发</a>
+            
+          </div>
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#堆栈"><span class="toc-text">堆栈</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Core-Foundation-的内存管理"><span class="toc-text">Core Foundation 的内存管理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#OC-的反射机制"><span class="toc-text">OC 的反射机制</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#协议中能否定义成员变量？"><span class="toc-text">协议中能否定义成员变量？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#如何理解Objective-C是动态运行时语言"><span class="toc-text">如何理解Objective-C是动态运行时语言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#readwrite、readonly、-assign、-retain、-cop、nonatomic"><span class="toc-text">readwrite、readonly、 assign、 retain、 cop、nonatomic</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#NotificationCenter、KVC、KVO、Delegate"><span class="toc-text">NotificationCenter、KVC、KVO、Delegate</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Category-和-Extention"><span class="toc-text">Category 和 Extention</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#潜拷贝和深拷贝"><span class="toc-text">潜拷贝和深拷贝</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#nil、Nil、NULL、NSNull"><span class="toc-text">nil、Nil、NULL、NSNull</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#block-weak-修饰的区别"><span class="toc-text">block / weak 修饰的区别</span></a></li></ol>
+    </div>
+  </div>
+
+
+    <div class="post-content">
+      
+        <h1 id="堆栈"><a href="#堆栈" class="headerlink" title="堆栈"></a>堆栈</h1><ul>
+<li><p>管理方式: 栈由编译器自动管理；堆由程序员手动管理。</p>
+</li>
+<li><p>大小： </p>
+<ul>
+<li>栈：在Windows下，栈是向低地址扩展的数据结构，是一块连续的内存区域。意思是，栈顶的地址和栈的最大容量是系统预先规定好的。</li>
+<li>堆：堆是向高地址扩展的数据结构，是不连续的内存区域。这是由于系统是用链表来存储空闲内存地址的。而链表的遍历方向是由低地址向高地址。堆的大小取决于计算机的虚拟内存。由此可见，堆可以获得更大更灵活的内存空间。</li>
+</ul>
+</li>
+<li><p>碎片问题：<br>  对于堆来说，频繁的new/delete 会造成内存空间的不连续，从而造成大量的碎片，是程序效率降低。栈则不存在这个问题。因为栈是先进后出的队列，永远不可能有一个内存块从栈中间弹出。</p>
+</li>
+<li><p>分配方式：<br>  堆是动态分配的，没有静态分配的堆。<br>  栈有两种分配方式：</p>
+<ul>
+<li>静态分配：编译器完成的，比如局部变量的分配。</li>
+<li>动态分配：由 <code>alloc</code> 函数进行分配。区别于堆的动态分配的是，栈的动态分配由编译器完成，无需手动实现。</li>
+</ul>
+</li>
+<li><p>分配效率：<br>  栈是机器系统提供的数据结构，计算机底层对栈提供支持，分配专门的寄存器存放栈的地址，压栈出栈都有专门的指令执行，因此效率高；堆则是C/C++函数库提供的，机制很复杂。</p>
+</li>
+</ul>
+<h1 id="Core-Foundation-的内存管理"><a href="#Core-Foundation-的内存管理" class="headerlink" title="Core Foundation 的内存管理"></a>Core Foundation 的内存管理</h1><ul>
+<li>凡是带有Create、Copy、Retain 等字眼的函数，创建出来的对象，都需要在最后做一次release。</li>
+<li>比如：<code>CFRunLoopObserverCreate release</code></li>
+</ul>
+<h1 id="OC-的反射机制"><a href="#OC-的反射机制" class="headerlink" title="OC 的反射机制"></a>OC 的反射机制</h1><ul>
+<li><p>Class 反射：</p>
+<ul>
+<li><p>通过类名的字符串实例化对象：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Class tempClass = <span class="built_in">NSClassFromString</span>(<span class="string">@"student"</span>);</div><div class="line">Student *stu = [[tempClass alloc] init]</div></pre></td></tr></table></figure>
+</li>
+<li><p>将类名变成字符串：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Class class =[Student class]; </div><div class="line">NSString *className = NSStringFromClass(class);</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>SELL 的反射</p>
+<ul>
+<li><p>通过方法的字符串实例化方法：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">SEL selector = <span class="built_in">NSSelectorFromClass</span>(<span class="string">@"setName"</span>);  </div><div class="line">[stu performSelector:selector withObject:<span class="string">@"Mike"</span>];</div></pre></td></tr></table></figure>
+</li>
+<li><p>将方法变成字符串</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSStringFomrSelector</span>(<span class="keyword">@selector</span>*(setName:))</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="协议中能否定义成员变量？"><a href="#协议中能否定义成员变量？" class="headerlink" title="协议中能否定义成员变量？"></a>协议中能否定义成员变量？</h1><ul>
+<li>可以，但是只能在头文件中声明，编译器不会自动生成实例变量。需要自己处理 <code>getter</code>和<code>setter</code> 方法</li>
+</ul>
+<h1 id="如何理解Objective-C是动态运行时语言"><a href="#如何理解Objective-C是动态运行时语言" class="headerlink" title="如何理解Objective-C是动态运行时语言"></a>如何理解Objective-C是动态运行时语言</h1><ul>
+<li>将数据类型的确定、调用类别对象指定的方法由编译时，推迟到运行时。</li>
+<li>多态：不同对象以自己的方式响应相同的消息。</li>
+</ul>
+<h1 id="readwrite、readonly、-assign、-retain、-cop、nonatomic"><a href="#readwrite、readonly、-assign、-retain、-cop、nonatomic" class="headerlink" title="readwrite、readonly、 assign、 retain、 cop、nonatomic"></a>readwrite、readonly、 assign、 retain、 cop、nonatomic</h1><ul>
+<li>readwrite：可读可写.要生成getter 和 setter 方法；</li>
+<li>readonly：只读。成getter方法。属性不可在类外修改。</li>
+<li>assign：赋值。用于基本数据类型的属性修饰。是一个property的默认属性。</li>
+<li>copy：修饰string类型。在setter方法里，将传入的对象复制一份，再赋值。</li>
+<li>nonatomic：非原子操作，决定编译器生成的setter 和 getter 是否是原子操作。</li>
+<li>atomic：表示多线安全，一般不使用。</li>
+<li><p>retain：持有。setter方法中先保留参数，再赋值，并且传入参数的retaincount+1</p>
+</li>
+<li><p>strong：修饰一般对象。和retain同义。先保留</p>
+</li>
+<li>weak：编译器将为weak修饰的property生成带__weak所有权修饰符的实例变量。</li>
+</ul>
+<h1 id="NotificationCenter、KVC、KVO、Delegate"><a href="#NotificationCenter、KVC、KVO、Delegate" class="headerlink" title="NotificationCenter、KVC、KVO、Delegate"></a>NotificationCenter、KVC、KVO、Delegate</h1><ul>
+<li>KVO：一对多，键值观察。</li>
+<li><p>KVC：键值编码，一个对象在调用setValue的时候:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">graph TB</div><div class="line">A[查找key对应的set方法]--&gt;|YES| B[调用set方法]</div><div class="line">A--&gt;|NO| C[查找_key的成员变量是否存在]</div><div class="line">C--&gt;|YES| D[赋值]</div><div class="line">C--&gt;|NO| E[查找相同名称的key]</div><div class="line">E--&gt; |YES| F[赋值]</div><div class="line">E--&gt; |NO| G[调用`valueForUndefinedkey` 和 `setValue: forUndefinedKey`]</div></pre></td></tr></table></figure>
+</li>
+<li><p>Delegate：发送者和接受者是直接的一对一的关系。允许一个类在某些特定时刻通知到其他类，而不需要获取那些类的指针，接受者可以改变发送者的行为。</p>
+</li>
+<li><p>Notification:观察者模式，通常发送者和接受者的关系是间接的多对多关系。消息的发送者告知接受者事件已经发生或者将要发送。接受者不能反过来影响发送者的行为。</p>
+</li>
+<li><p>区别     </p>
+<ul>
+<li>delegate 效率比 NSNotification 高。</li>
+<li>delegate 比 Notification 更直接，需要关注返回值。</li>
+<li>两个模块联系不是很紧密，就用NSNotification 传值，例如多线程间的传值。</li>
+</ul>
+</li>
+</ul>
+<h1 id="Category-和-Extention"><a href="#Category-和-Extention" class="headerlink" title="Category 和 Extention"></a>Category 和 Extention</h1><ul>
+<li>类别：在没有原类 .m  文件之外给原类添加方法，但不能给原类添加成员变量，添加的成员变量不能初始化。</li>
+<li>扩展：一种特殊形式的类别。在一个类的 .m 文件里声明变量和方法。可以给某个类添加私有方法和私有变量。</li>
+<li>区别：<ul>
+<li>扩展可以添加属性和方法，并且添加的方法是必须实现的。</li>
+<li>类别可以再不知道不改变原来代码的情况下往原有类添加新的方法，只能添加，不能删除修改。</li>
+<li>如果类别和原有类中的方法产生命名冲突，则类别的方法会覆盖原来的方法，即类别具有更高的优先级。</li>
+</ul>
+</li>
+</ul>
+<h1 id="潜拷贝和深拷贝"><a href="#潜拷贝和深拷贝" class="headerlink" title="潜拷贝和深拷贝"></a>潜拷贝和深拷贝</h1><ul>
+<li>潜拷贝：只复制对象的指针，而不复制对象本身，对象内容有改变，则复制之后的结果也会变。</li>
+<li>深拷贝：复制对象本身。</li>
+</ul>
+<h1 id="nil、Nil、NULL、NSNull"><a href="#nil、Nil、NULL、NSNull" class="headerlink" title="nil、Nil、NULL、NSNull"></a>nil、Nil、NULL、NSNull</h1><ul>
+<li>nil：针对Objective-C中的对象使用，表示空对象。nil对象调用任何方法表示什么也不执行，也不会崩溃。</li>
+<li>Nil：针对Objective-C中的类使用，标识空类（<code>Class myClass = Nil</code>）。</li>
+<li>NULL：对于C语言指针使用的，表示空指针。</li>
+<li>NSNull：类类型，用于标识空的占位对象，可以用来给服务端接口传空值。</li>
+</ul>
+<h1 id="block-weak-修饰的区别"><a href="#block-weak-修饰的区别" class="headerlink" title="block / weak 修饰的区别"></a><strong>block / </strong>weak 修饰的区别</h1><ul>
+<li><code>__block</code> 在 arc 和 mrc 环境下都能用，可以修饰对象，也能修饰基本数据类型。</li>
+<li><code>__weak</code> 只能用在 arc 环境下，只能修饰对象，不能修饰基本数据类型。</li>
+<li><code>__block</code> 对象可以在Block 中重新赋值，<code>__weak</code> 不行。</li>
+</ul>
+
+      
+    </div>
+
+    
+      
+      
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/笔记/">笔记</a>
+            
+          </div>
+        
+        
+        
+  <nav class="post-nav">
+    
+    
+      <a class="next" href="/2017/07/07/面试总结/">
+        <span class="next-text nav-default">近几日面试有感</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:hunter_mz@icloud.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+      
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2015 - 
+    
+    2017
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">HunterMz</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://huntermz.site/2017/08/16/iOS基础知识总结一/';
+        this.page.identifier = '2017/08/16/iOS基础知识总结一/';
+        this.page.title = 'iOS基础知识总结一';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//huntermz.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.4.x"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.4.x"></script>
+
+  </body>
+</html>
