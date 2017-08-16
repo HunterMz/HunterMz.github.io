@@ -47,6 +47,8 @@
 
 
 
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" />
+
 
 
 
@@ -214,6 +216,8 @@
       
         
         
+          
+        
 
         
           <h1 id="堆栈"><a href="#堆栈" class="headerlink" title="堆栈"></a>堆栈</h1><ul>
@@ -227,104 +231,10 @@
 </li>
 <li><p>碎片问题：<br>  对于堆来说，频繁的new/delete 会造成内存空间的不连续，从而造成大量的碎片，是程序效率降低。栈则不存在这个问题。因为栈是先进后出的队列，永远不可能有一个内存块从栈中间弹出。</p>
 </li>
-<li><p>分配方式：<br>  堆是动态分配的，没有静态分配的堆。<br>  栈有两种分配方式：</p>
-<ul>
-<li>静态分配：编译器完成的，比如局部变量的分配。</li>
-<li>动态分配：由 <code>alloc</code> 函数进行分配。区别于堆的动态分配的是，栈的动态分配由编译器完成，无需手动实现。</li>
 </ul>
-</li>
-<li><p>分配效率：<br>  栈是机器系统提供的数据结构，计算机底层对栈提供支持，分配专门的寄存器存放栈的地址，压栈出栈都有专门的指令执行，因此效率高；堆则是C/C++函数库提供的，机制很复杂。</p>
-</li>
-</ul>
-<h1 id="Core-Foundation-的内存管理"><a href="#Core-Foundation-的内存管理" class="headerlink" title="Core Foundation 的内存管理"></a>Core Foundation 的内存管理</h1><ul>
-<li>凡是带有Create、Copy、Retain 等字眼的函数，创建出来的对象，都需要在最后做一次release。</li>
-<li>比如：<code>CFRunLoopObserverCreate release</code></li>
-</ul>
-<h1 id="OC-的反射机制"><a href="#OC-的反射机制" class="headerlink" title="OC 的反射机制"></a>OC 的反射机制</h1><ul>
-<li><p>Class 反射：</p>
-<ul>
-<li><p>通过类名的字符串实例化对象：</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Class tempClass = <span class="built_in">NSClassFromString</span>(<span class="string">@"student"</span>);</div><div class="line">Student *stu = [[tempClass alloc] init]</div></pre></td></tr></table></figure>
-</li>
-<li><p>将类名变成字符串：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Class class =[Student class]; </div><div class="line">NSString *className = NSStringFromClass(class);</div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>SELL 的反射</p>
-<ul>
-<li><p>通过方法的字符串实例化方法：</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">SEL selector = <span class="built_in">NSSelectorFromClass</span>(<span class="string">@"setName"</span>);  </div><div class="line">[stu performSelector:selector withObject:<span class="string">@"Mike"</span>];</div></pre></td></tr></table></figure>
-</li>
-<li><p>将方法变成字符串</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSStringFomrSelector</span>(<span class="keyword">@selector</span>*(setName:))</div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-<h1 id="协议中能否定义成员变量？"><a href="#协议中能否定义成员变量？" class="headerlink" title="协议中能否定义成员变量？"></a>协议中能否定义成员变量？</h1><ul>
-<li>可以，但是只能在头文件中声明，编译器不会自动生成实例变量。需要自己处理 <code>getter</code>和<code>setter</code> 方法</li>
-</ul>
-<h1 id="如何理解Objective-C是动态运行时语言"><a href="#如何理解Objective-C是动态运行时语言" class="headerlink" title="如何理解Objective-C是动态运行时语言"></a>如何理解Objective-C是动态运行时语言</h1><ul>
-<li>将数据类型的确定、调用类别对象指定的方法由编译时，推迟到运行时。</li>
-<li>多态：不同对象以自己的方式响应相同的消息。</li>
-</ul>
-<h1 id="readwrite、readonly、-assign、-retain、-cop、nonatomic"><a href="#readwrite、readonly、-assign、-retain、-cop、nonatomic" class="headerlink" title="readwrite、readonly、 assign、 retain、 cop、nonatomic"></a>readwrite、readonly、 assign、 retain、 cop、nonatomic</h1><ul>
-<li>readwrite：可读可写.要生成getter 和 setter 方法；</li>
-<li>readonly：只读。成getter方法。属性不可在类外修改。</li>
-<li>assign：赋值。用于基本数据类型的属性修饰。是一个property的默认属性。</li>
-<li>copy：修饰string类型。在setter方法里，将传入的对象复制一份，再赋值。</li>
-<li>nonatomic：非原子操作，决定编译器生成的setter 和 getter 是否是原子操作。</li>
-<li>atomic：表示多线安全，一般不使用。</li>
-<li><p>retain：持有。setter方法中先保留参数，再赋值，并且传入参数的retaincount+1</p>
-</li>
-<li><p>strong：修饰一般对象。和retain同义。先保留</p>
-</li>
-<li>weak：编译器将为weak修饰的property生成带__weak所有权修饰符的实例变量。</li>
-</ul>
-<h1 id="NotificationCenter、KVC、KVO、Delegate"><a href="#NotificationCenter、KVC、KVO、Delegate" class="headerlink" title="NotificationCenter、KVC、KVO、Delegate"></a>NotificationCenter、KVC、KVO、Delegate</h1><ul>
-<li>KVO：一对多，键值观察。</li>
-<li><p>KVC：键值编码，一个对象在调用setValue的时候:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">graph TB</div><div class="line">A[查找key对应的set方法]--&gt;|YES| B[调用set方法]</div><div class="line">A--&gt;|NO| C[查找_key的成员变量是否存在]</div><div class="line">C--&gt;|YES| D[赋值]</div><div class="line">C--&gt;|NO| E[查找相同名称的key]</div><div class="line">E--&gt; |YES| F[赋值]</div><div class="line">E--&gt; |NO| G[调用`valueForUndefinedkey` 和 `setValue: forUndefinedKey`]</div></pre></td></tr></table></figure>
-</li>
-<li><p>Delegate：发送者和接受者是直接的一对一的关系。允许一个类在某些特定时刻通知到其他类，而不需要获取那些类的指针，接受者可以改变发送者的行为。</p>
-</li>
-<li><p>Notification:观察者模式，通常发送者和接受者的关系是间接的多对多关系。消息的发送者告知接受者事件已经发生或者将要发送。接受者不能反过来影响发送者的行为。</p>
-</li>
-<li><p>区别     </p>
-<ul>
-<li>delegate 效率比 NSNotification 高。</li>
-<li>delegate 比 Notification 更直接，需要关注返回值。</li>
-<li>两个模块联系不是很紧密，就用NSNotification 传值，例如多线程间的传值。</li>
-</ul>
-</li>
-</ul>
-<h1 id="Category-和-Extention"><a href="#Category-和-Extention" class="headerlink" title="Category 和 Extention"></a>Category 和 Extention</h1><ul>
-<li>类别：在没有原类 .m  文件之外给原类添加方法，但不能给原类添加成员变量，添加的成员变量不能初始化。</li>
-<li>扩展：一种特殊形式的类别。在一个类的 .m 文件里声明变量和方法。可以给某个类添加私有方法和私有变量。</li>
-<li>区别：<ul>
-<li>扩展可以添加属性和方法，并且添加的方法是必须实现的。</li>
-<li>类别可以再不知道不改变原来代码的情况下往原有类添加新的方法，只能添加，不能删除修改。</li>
-<li>如果类别和原有类中的方法产生命名冲突，则类别的方法会覆盖原来的方法，即类别具有更高的优先级。</li>
-</ul>
-</li>
-</ul>
-<h1 id="潜拷贝和深拷贝"><a href="#潜拷贝和深拷贝" class="headerlink" title="潜拷贝和深拷贝"></a>潜拷贝和深拷贝</h1><ul>
-<li>潜拷贝：只复制对象的指针，而不复制对象本身，对象内容有改变，则复制之后的结果也会变。</li>
-<li>深拷贝：复制对象本身。</li>
-</ul>
-<h1 id="nil、Nil、NULL、NSNull"><a href="#nil、Nil、NULL、NSNull" class="headerlink" title="nil、Nil、NULL、NSNull"></a>nil、Nil、NULL、NSNull</h1><ul>
-<li>nil：针对Objective-C中的对象使用，表示空对象。nil对象调用任何方法表示什么也不执行，也不会崩溃。</li>
-<li>Nil：针对Objective-C中的类使用，标识空类（<code>Class myClass = Nil</code>）。</li>
-<li>NULL：对于C语言指针使用的，表示空指针。</li>
-<li>NSNull：类类型，用于标识空的占位对象，可以用来给服务端接口传空值。</li>
-</ul>
-<h1 id="block-weak-修饰的区别"><a href="#block-weak-修饰的区别" class="headerlink" title="block / weak 修饰的区别"></a><strong>block / </strong>weak 修饰的区别</h1><ul>
-<li><code>__block</code> 在 arc 和 mrc 环境下都能用，可以修饰对象，也能修饰基本数据类型。</li>
-<li><code>__weak</code> 只能用在 arc 环境下，只能修饰对象，不能修饰基本数据类型。</li>
-<li><code>__block</code> 对象可以在Block 中重新赋值，<code>__weak</code> 不行。</li>
-</ul>
-
+          <div class="read-more">
+            <a href="/2017/08/16/iOS基础知识总结一/" class="read-more-link">阅读更多</a>
+          </div>
         
       
     </div>
@@ -544,284 +454,6 @@
   </article>
 
     
-      
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2016/11/25/静态库&项目依赖/">静态库 & 项目依赖</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2016-11-25
-        </span>
-        
-          <div class="post-category">
-            
-              <a href="/categories/iOS开发/">iOS开发</a>
-            
-          </div>
-        
-      </div>
-    </header>
-
-    
-    
-
-    <div class="post-content">
-      
-        
-        
-          
-        
-
-        
-          <h2 id="1-制作静态库"><a href="#1-制作静态库" class="headerlink" title="1. 制作静态库"></a>1. 制作静态库</h2><ul>
-<li><p>新建一个 <code>WorkSpace</code> </p>
-<p>  <img src="http://o9xc0bh9t.bkt.clouddn.com/14799821305845.jpg" alt=""></p>
-</li>
-<li><p>Xcode -&gt; File -&gt; New -&gt;Project，选择 <code>Cocoa Touch Static Library</code></p>
-<p>  <img src="http://o9xc0bh9t.bkt.clouddn.com/14799822604174.jpg" alt=""></p>
-</li>
-</ul>
-          <div class="read-more">
-            <a href="/2016/11/25/静态库&项目依赖/" class="read-more-link">阅读更多</a>
-          </div>
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-    
-      
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2016/09/20/iOS 开发中遇到的坑/">iOS 开发中遇到的坑</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2016-09-20
-        </span>
-        
-          <div class="post-category">
-            
-              <a href="/categories/iOS开发/">iOS开发</a>
-            
-          </div>
-        
-      </div>
-    </header>
-
-    
-    
-
-    <div class="post-content">
-      
-        
-        
-          
-        
-
-        
-          <h1 id="记录-iOS-开发中遇到的坑，持续更新…"><a href="#记录-iOS-开发中遇到的坑，持续更新…" class="headerlink" title="记录 iOS 开发中遇到的坑，持续更新….."></a>记录 iOS 开发中遇到的坑，持续更新…..</h1><h2 id="iOS10-权限描述-crash"><a href="#iOS10-权限描述-crash" class="headerlink" title="iOS10 权限描述 crash"></a>iOS10 权限描述 crash</h2><p><strong>问题描述：</strong>当使用 iOS10 运行项目会 crash，报错信息如下：</p>
-<font color=red><strong>This app has crashed because it attempted to access privacy-sensitive data without a usage description.  The app’s Info.plist must contain an NSContactsUsageDescription key with a string value explaining to the user how the app uses this data.</strong></font>
-
-<p><strong>原因分析：</strong></p>
-<p>在 iOS10 中，如果有访问系统资源，例如：照相机、相册、麦克风、通讯录等，需要在 info.plist 文件中添加描述字段</p>
-<p><strong>解决方案：</strong></p>
-          <div class="read-more">
-            <a href="/2016/09/20/iOS 开发中遇到的坑/" class="read-more-link">阅读更多</a>
-          </div>
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-    
-      
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2016/09/02/RxSwfit 笔记/">RxSwift 操作符自查笔记</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2016-09-02
-        </span>
-        
-          <div class="post-category">
-            
-              <a href="/categories/iOS开发/">iOS开发</a>
-            
-          </div>
-        
-      </div>
-    </header>
-
-    
-    
-
-    <div class="post-content">
-      
-        
-        
-          
-        
-
-        
-          <h1 id="RxSwift-学习笔记"><a href="#RxSwift-学习笔记" class="headerlink" title="RxSwift 学习笔记"></a>RxSwift 学习笔记</h1><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p><a href="https://github.com/HunterMz/RxSwiftDemo">项目Git链接</a><br>在 Rx 的世界中，最根本的部分是 <code>观察者模式（Observer pattern）</code> 和 <code>迭代器模式（Iterator pattern）</code> 的结合。这两者是相互作用的，在两种情况下的计算都是从生产者中取出的值。对于迭代器模式，只要他们是可用的，我们就可以获取值;对于观察者模式，我们是在生产者给所有具体的观察者发出通知后，从中获取数据去处理值。</p>
-<p><strong>观察者 + 迭代器 + 推送 = 可观测的（Observable）实体</strong></p>
-<p>RxSwift核心概念就是一个观察者(Observer)订阅一个可观察序列(Observable)。观察者对 Observable 发射的数据或数据序列作出响应。可观察序列分为三种：</p>
-<pre><code>* `.Next`: 序列的下一个元素
- * `.Complete`: 表示事件序列的完结。
-* `.Error`: 同样表示完结，但是代表异常导致的完结。
-</code></pre><p><strong>序列的冷热问题：</strong></p>
-<pre><code>* 冷：只有当有观察者订阅这个序列时，序列才发射值。可以保证即使有订阅者中途加入也可以收到完整的事件序列。
-* 热：序列创建时就开始发射值。这样如果后面有订阅者来的时候，就可能会错过一些事件。
-</code></pre>
-          <div class="read-more">
-            <a href="/2016/09/02/RxSwfit 笔记/" class="read-more-link">阅读更多</a>
-          </div>
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-    
-      
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2016/07/21/Swift 自定义类型/">Swift——自定义类型</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2016-07-21
-        </span>
-        
-          <div class="post-category">
-            
-              <a href="/categories/iOS开发/">iOS开发</a>
-            
-          </div>
-        
-      </div>
-    </header>
-
-    
-    
-
-    <div class="post-content">
-      
-        
-        
-          
-        
-
-        
-          <h2 id="Hashable-协议"><a href="#Hashable-协议" class="headerlink" title="Hashable 协议"></a>Hashable 协议</h2><ul>
-<li><p>什么是Hashable(哈希值)？<br>  <code>Hashable</code> 常用于快速定位和查找（用于Set里面的对象和Dictionary里面的作为key的对象，都需要实现（Hashable）协议）被哈希的对象。</p>
-<blockquote>
-<p>计算机内部会维护一个HashTable的一个表（想象成数据库的表），表类似于键值对的形式存在，hashValue就作为键（类似于带有索引的一个没有唯一约束的一个字段，注：并非主键，因为一个hashValue可能对应多条记录（也就是多个对象）。再判断相等用Equatable）<br>原文链接：<a href="http://www.jianshu.com/p/5aa75cd5e13e">http://www.jianshu.com/p/5aa75cd5e13e</a></p>
-</blockquote>
-</li>
-<li><p>Swift 中的Hashable协议<br>  关于<code>Hashable</code> 协议，苹果官方文档中给出如下概述：</p>
-<blockquote>
-<p>A hash value, provided by a type’s hashValue property, is an integer that is the same for any two instances that compare equally. That is, for two instances a and b of the same type, if a == b then a.hashValue == b.hashValue. The reverse is not true: Two instances with equal hash values are not necessarily equal to each other.</p>
-</blockquote>
-<p>  可见通常我们可以通过比较两个类型的 <code>hash value</code> 来确定两个类型是否相等。</p>
-</li>
-</ul>
-          <div class="read-more">
-            <a href="/2016/07/21/Swift 自定义类型/" class="read-more-link">阅读更多</a>
-          </div>
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-    
-      
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2016/07/07/算法/">排序算法</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2016-07-07
-        </span>
-        
-          <div class="post-category">
-            
-              <a href="/categories/编程基础/">编程基础</a>
-            
-          </div>
-        
-      </div>
-    </header>
-
-    
-    
-
-    <div class="post-content">
-      
-        
-        
-          
-        
-
-        
-          <p>此文用来收录常见的排序算法</p>
-          <div class="read-more">
-            <a href="/2016/07/07/算法/" class="read-more-link">阅读更多</a>
-          </div>
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-    
   </section>
 
   
@@ -915,6 +547,8 @@
 
 
     
+  
+
 
 
 
@@ -927,6 +561,8 @@
     <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
   
 
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
   
 
 
