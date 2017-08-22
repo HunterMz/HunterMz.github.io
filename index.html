@@ -189,6 +189,72 @@
     <header class="post-header">
       <h1 class="post-title">
         
+          <a class="post-link" href="/2017/08/22/iOS基础知识总结二/">iOS基础知识总结一</a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2017-08-22
+        </span>
+        
+          <div class="post-category">
+            
+              <a href="/categories/iOS开发/">iOS开发</a>
+            
+          </div>
+        
+      </div>
+    </header>
+
+    
+    
+
+    <div class="post-content">
+      
+        
+        
+          
+        
+
+        
+          <h1 id="NSString-用-copy-和-strong-修饰的区别"><a href="#NSString-用-copy-和-strong-修饰的区别" class="headerlink" title="NSString 用 copy 和 strong 修饰的区别"></a>NSString 用 <code>copy</code> 和 <code>strong</code> 修饰的区别</h1><ul>
+<li>OC 中 NSString 为不可变字符串的时候，用 <code>copy</code> 和 <code>strong</code> 都是只分配一次内存。但是如果使用 <code>copy</code> ,需要判断字符串是否是不可变字符串，如果是不可变字符串，就不再分配空间，如果是可变字符串才分派空间。如果程序中用到 <code>NSString</code> 的地方特别多，每一次都要先进行判断就会耗费性能。用 <code>strong</code> 就不会判断，所以在类型已知的情况下，可以直接使用 <code>strong</code>。</li>
+</ul>
+<h1 id="NSArray、NSMutableArray、NSSet、NSMutableSet、NSDictionary、NSMutableDictionary"><a href="#NSArray、NSMutableArray、NSSet、NSMutableSet、NSDictionary、NSMutableDictionary" class="headerlink" title="NSArray、NSMutableArray、NSSet、NSMutableSet、NSDictionary、NSMutableDictionary"></a>NSArray、NSMutableArray、NSSet、NSMutableSet、NSDictionary、NSMutableDictionary</h1><ul>
+<li>特点<ul>
+<li>NSArray：<br>不可变数组，有序，只能存储对象类型，可通过索引直接访问元素，而且元素类型可以不一样，但是不能进行增、删、改操作；</li>
+<li>NSMutableArray:<br>可变数组，能进行增、删、改操作。通过索引查询值很快，但是插入、删除效率很低。</li>
+<li>NSSet：<br>不可变集合，确定、互异、无序。只能访问不能修改。</li>
+<li>NSMutableSet:<br>可变集合，可以对集合增、删、改操作。集合通过值查询很快，插入、删除操作极快。</li>
+<li>NSDictionary:<br>不可变字典，无序，每个key对应的值唯一，可以通过key取值；</li>
+<li>NSMutableDictionary:<br>可变字典，能对字典进行增、删、改操作。通过key查询、插入、删除值都很快。</li>
+</ul>
+</li>
+<li><p>应用场景</p>
+<ul>
+<li>数组用于处理一组有序的数据集，比如常用列表的 dataSource 要求有序，可通过索引直接访问，效率高。</li>
+<li>集合要求具有确定性、互异性、无序性，在开发中少用到。</li>
+<li><p>字典是键值对集合，操作字典效率高，时间复杂度为常量，但是值是无序的。</p>
+          <div class="read-more">
+            <a href="/2017/08/22/iOS基础知识总结二/" class="read-more-link">阅读更多</a>
+          </div>
+        
+      
+    </div>
+
+    
+
+    
+
+  </article>
+
+    
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
           <a class="post-link" href="/2017/08/16/iOS基础知识总结一/">iOS基础知识总结一</a>
         
       </h1>
@@ -391,55 +457,6 @@
           <h2 id="智齿"><a href="#智齿" class="headerlink" title="智齿"></a>智齿</h2><p>智齿——人类进化还不够彻底的一个重要体现，大约有75%的人会长智齿，一般在16～25岁间萌出。通常情况下应该有上下左右对称的4颗牙，有的少于4颗甚至没有，极少数人会多于4颗。我就长了4颗，其中有一个横着长的阻生牙。这次拔了右边的两个，过段时间还得再拔一次。</p>
           <div class="read-more">
             <a href="/2017/04/29/拔牙记/" class="read-more-link">阅读更多</a>
-          </div>
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-    
-      
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2017/04/18/手机被偷后的一些想法/">手机丢失后的一些想法</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2017-04-18
-        </span>
-        
-          <div class="post-category">
-            
-              <a href="/categories/杂七杂八/">杂七杂八</a>
-            
-          </div>
-        
-      </div>
-    </header>
-
-    
-    
-
-    <div class="post-content">
-      
-        
-        
-          
-        
-
-        
-          <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>那天下了点雨，挺冷的。早上出门穿的太薄，急着上车，人很多，需要侧着身才能挤上去，我上车的时候是右侧兜(装手机)朝外，，一手拿雨伞，一手抓扶手。上车大约一分钟后习惯性摸手机的时候已经找不到了，让旁边的人打电话提示已关机。。。。。</p>
-          <div class="read-more">
-            <a href="/2017/04/18/手机被偷后的一些想法/" class="read-more-link">阅读更多</a>
           </div>
         
       

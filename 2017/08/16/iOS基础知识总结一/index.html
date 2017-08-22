@@ -212,7 +212,7 @@
   <div class="post-toc" id="post-toc">
     <h2 class="post-toc-title">文章目录</h2>
     <div class="post-toc-content">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#堆栈"><span class="toc-text">堆栈</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Core-Foundation-的内存管理"><span class="toc-text">Core Foundation 的内存管理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#OC-的反射机制"><span class="toc-text">OC 的反射机制</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#协议中能否定义成员变量？"><span class="toc-text">协议中能否定义成员变量？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#如何理解Objective-C是动态运行时语言"><span class="toc-text">如何理解Objective-C是动态运行时语言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#readwrite、readonly、-assign、-retain、-cop、nonatomic"><span class="toc-text">readwrite、readonly、 assign、 retain、 cop、nonatomic</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#NotificationCenter、KVC、KVO、Delegate"><span class="toc-text">NotificationCenter、KVC、KVO、Delegate</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Category-和-Extention"><span class="toc-text">Category 和 Extention</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#潜拷贝和深拷贝"><span class="toc-text">潜拷贝和深拷贝</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#nil、Nil、NULL、NSNull"><span class="toc-text">nil、Nil、NULL、NSNull</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#block-weak-修饰的区别"><span class="toc-text">block / weak 修饰的区别</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#堆栈"><span class="toc-text">堆栈</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Core-Foundation-的内存管理"><span class="toc-text">Core Foundation 的内存管理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#OC-的反射机制"><span class="toc-text">OC 的反射机制</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#协议中能否定义成员变量？"><span class="toc-text">协议中能否定义成员变量？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#如何理解Objective-C是动态运行时语言"><span class="toc-text">如何理解Objective-C是动态运行时语言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#readwrite、readonly、-assign、-retain、-copy、nonatomic"><span class="toc-text">readwrite、readonly、 assign、 retain、 copy、nonatomic</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#NotificationCenter、KVC、KVO、Delegate"><span class="toc-text">NotificationCenter、KVC、KVO、Delegate</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Category-和-Extention"><span class="toc-text">Category 和 Extention</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#潜拷贝和深拷贝"><span class="toc-text">潜拷贝和深拷贝</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#nil、Nil、NULL、NSNull"><span class="toc-text">nil、Nil、NULL、NSNull</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#block-weak-修饰的区别"><span class="toc-text">block / weak 修饰的区别</span></a></li></ol>
     </div>
   </div>
 
@@ -275,7 +275,7 @@
 <li>将数据类型的确定、调用类别对象指定的方法由编译时，推迟到运行时。</li>
 <li>多态：不同对象以自己的方式响应相同的消息。</li>
 </ul>
-<h1 id="readwrite、readonly、-assign、-retain、-cop、nonatomic"><a href="#readwrite、readonly、-assign、-retain、-cop、nonatomic" class="headerlink" title="readwrite、readonly、 assign、 retain、 cop、nonatomic"></a>readwrite、readonly、 assign、 retain、 cop、nonatomic</h1><ul>
+<h1 id="readwrite、readonly、-assign、-retain、-copy、nonatomic"><a href="#readwrite、readonly、-assign、-retain、-copy、nonatomic" class="headerlink" title="readwrite、readonly、 assign、 retain、 copy、nonatomic"></a>readwrite、readonly、 assign、 retain、 copy、nonatomic</h1><ul>
 <li>readwrite：可读可写.要生成getter 和 setter 方法；</li>
 <li>readonly：只读。成getter方法。属性不可在类外修改。</li>
 <li>assign：赋值。用于基本数据类型的属性修饰。是一个property的默认属性。</li>
@@ -355,6 +355,12 @@
         
         
   <nav class="post-nav">
+    
+      <a class="prev" href="/2017/08/22/iOS基础知识总结二/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">iOS基础知识总结一</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
     
     
       <a class="next" href="/2017/07/07/面试总结/">

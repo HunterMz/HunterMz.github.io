@@ -5,6 +5,100 @@
     
     <entry>
       <title><![CDATA[iOS基础知识总结一]]></title>
+      <url>http://huntermz.site/2017/08/22/iOS%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93%E4%BA%8C/</url>
+      <content type="html"><![CDATA[<h1 id="NSString-用-copy-和-strong-修饰的区别"><a href="#NSString-用-copy-和-strong-修饰的区别" class="headerlink" title="NSString 用 copy 和 strong 修饰的区别"></a>NSString 用 <code>copy</code> 和 <code>strong</code> 修饰的区别</h1><ul>
+<li>OC 中 NSString 为不可变字符串的时候，用 <code>copy</code> 和 <code>strong</code> 都是只分配一次内存。但是如果使用 <code>copy</code> ,需要判断字符串是否是不可变字符串，如果是不可变字符串，就不再分配空间，如果是可变字符串才分派空间。如果程序中用到 <code>NSString</code> 的地方特别多，每一次都要先进行判断就会耗费性能。用 <code>strong</code> 就不会判断，所以在类型已知的情况下，可以直接使用 <code>strong</code>。</li>
+</ul>
+<h1 id="NSArray、NSMutableArray、NSSet、NSMutableSet、NSDictionary、NSMutableDictionary"><a href="#NSArray、NSMutableArray、NSSet、NSMutableSet、NSDictionary、NSMutableDictionary" class="headerlink" title="NSArray、NSMutableArray、NSSet、NSMutableSet、NSDictionary、NSMutableDictionary"></a>NSArray、NSMutableArray、NSSet、NSMutableSet、NSDictionary、NSMutableDictionary</h1><ul>
+<li>特点<ul>
+<li>NSArray：<br>不可变数组，有序，只能存储对象类型，可通过索引直接访问元素，而且元素类型可以不一样，但是不能进行增、删、改操作；</li>
+<li>NSMutableArray:<br>可变数组，能进行增、删、改操作。通过索引查询值很快，但是插入、删除效率很低。</li>
+<li>NSSet：<br>不可变集合，确定、互异、无序。只能访问不能修改。</li>
+<li>NSMutableSet:<br>可变集合，可以对集合增、删、改操作。集合通过值查询很快，插入、删除操作极快。</li>
+<li>NSDictionary:<br>不可变字典，无序，每个key对应的值唯一，可以通过key取值；</li>
+<li>NSMutableDictionary:<br>可变字典，能对字典进行增、删、改操作。通过key查询、插入、删除值都很快。</li>
+</ul>
+</li>
+<li><p>应用场景</p>
+<ul>
+<li>数组用于处理一组有序的数据集，比如常用列表的 dataSource 要求有序，可通过索引直接访问，效率高。</li>
+<li>集合要求具有确定性、互异性、无序性，在开发中少用到。</li>
+<li><p>字典是键值对集合，操作字典效率高，时间复杂度为常量，但是值是无序的。</p>
+<a id="more"></a>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="instancetype-和-id"><a href="#instancetype-和-id" class="headerlink" title="instancetype 和 id"></a>instancetype 和 id</h1><ul>
+<li>都可以作为方法的返回类型。</li>
+<li><code>instancetype</code> 可以返回和方法所在类相同类型的对象，<code>id</code> 只能返回未知类型的对象。简单来说就是 <code>instancetype</code> 在编译期确定实例的类型，而 <code>id</code> 在运行时检查类型。</li>
+<li><code>instancetype</code> 只能作为返回值，不能像 <code>id</code> 那样作为参数。</li>
+</ul>
+<h1 id="野指针、内存泄露、僵尸对象、空指针"><a href="#野指针、内存泄露、僵尸对象、空指针" class="headerlink" title="野指针、内存泄露、僵尸对象、空指针"></a>野指针、内存泄露、僵尸对象、空指针</h1><ul>
+<li><p>野指针：指针变量没有进行初始化或者指向的空间已经被释放。</p>
+<ul>
+<li>使用野指针调用方法，会报异常，崩溃。</li>
+<li>通常在调用玩 <code>release</code> 方法后，把保存对象的地址清空，赋值为nil, OC 中没有空指针异常，所以 <code>[nil retain]</code> 调用方法是不会有异常。</li>
+</ul>
+</li>
+<li><p>内存泄露：</p>
+<ul>
+<li>如 <code>Person *person = [Person new]</code> （对象提前赋值nil, 或者清空），在栈区的 <code>person</code> 已经被释放了，而堆区new产生的对象还没有被释放，就会造成内存泄露。</li>
+<li>在MRC模式下，没有配对释放或者对象提前赋值nil导致release不起作用，会引起内存泄露。</li>
+</ul>
+</li>
+<li><p>僵尸对象：堆中已经被释放的对象。</p>
+</li>
+<li>空指针：指针赋值为空，nil。</li>
+</ul>
+<h1 id="自动释放池是什么？如何工作？"><a href="#自动释放池是什么？如何工作？" class="headerlink" title="自动释放池是什么？如何工作？"></a>自动释放池是什么？如何工作？</h1><ul>
+<li>自动释放池是用来存储多个对象类型的指针变量。</li>
+<li>存入自动释放池的对象在自动释放池被销毁时，会对池内对象全部做一次release操作。</li>
+<li>调用对象的 <code>autorelease</code> 方法可以把对象加入池中。</li>
+<li>自动释放池在当前的 <code>runloop</code> 迭代结束时释放。一旦监听到 <code>Runloop</code> 即将进入睡眠等待状态，就释放自动释放池。</li>
+<li>多次调用对象的 <code>autorelease</code> 会导致 <code>野指针异常</code>。</li>
+</ul>
+<h1 id="如何检查内存泄露"><a href="#如何检查内存泄露" class="headerlink" title="如何检查内存泄露"></a>如何检查内存泄露</h1><ul>
+<li>静态分析：analyze</li>
+<li>instruments 工具里有个leak可以动态分析，如果在 Block 中多次使用 weakSelf 的话，可以在 Block 中先使用 strongSelf，防止 Block 执行时 weakSelf 被意外释放。</li>
+</ul>
+<h1 id="内存缓存机制实现"><a href="#内存缓存机制实现" class="headerlink" title="内存缓存机制实现"></a>内存缓存机制实现</h1><ul>
+<li>FIFO：新数据插入FIFO队列的尾部；数据在FIFO队列中顺序移动，淘汰队列头部的数据。</li>
+<li>LRU：新数据插入链表头部；每当缓存数据命中，则将数据移到链表头部；当链表满的时候，将链表尾部的数据丢弃。</li>
+<li>LFU：新数据插入队列尾部；队列中的数据被访问后，引用计数增加，队列重新排序；当需要淘汰数据时，将已经排序的列表最后的数据块删除。</li>
+</ul>
+<h1 id="常见的内存引用场景"><a href="#常见的内存引用场景" class="headerlink" title="常见的内存引用场景"></a>常见的内存引用场景</h1><ul>
+<li>定时器：<code>NSTimer</code> 经常被作为某个类的成员变量，而 <code>NSTimer</code> 初始化时要指定 self 为 target ，容易造成循环引用 <code>self ——&gt;timer--&gt;self</code> 另外，若timer一直处于 validate 的状态，则其引用计数将始终大于 0， 因此在不再使用定时器以后，应该先调用 <code>invalidate</code> 方法。</li>
+<li>Block：Block 在 copy 时都会对Block内部用的对象进行强引用。<code>self--&gt;block--&gt;self</code> 或者 <code>self--&gt;block--_ivar(成员变量)</code>。</li>
+<li>代理：在声明 <code>delegate</code> 时，使用 weak.</li>
+</ul>
+<h1 id="KVO-的底层实现"><a href="#KVO-的底层实现" class="headerlink" title="KVO 的底层实现"></a>KVO 的底层实现</h1><ul>
+<li><p>KVO 基于 runtime 机制实现。</p>
+</li>
+<li><p>当一个对象(假设是 person 对象， person 是 MYPerson)的属性值发生改变时，系统会自动生成一个类(继承自 MYPerson) NSKVONotifying_MYPerson，在这个类的 <code>setAge</code> 方法里，调用<code>[self willChangeValueForKey:@&quot;age&quot;] 和 [self didChangeValueForKey:@&quot;age&quot;]</code>，而这两个方法内部会主动调用监听者内部的 <code>- (void)observeValueForKeyPath</code> 这个方法。</p>
+</li>
+<li><p>当添加监听者后，person类型由 MYPerson 被改变成 NSKVONotifying_MYPerson</p>
+</li>
+</ul>
+]]></content>
+      
+        <categories>
+            
+            <category> iOS开发 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[iOS基础知识总结一]]></title>
       <url>http://huntermz.site/2017/08/16/iOS%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93%E4%B8%80/</url>
       <content type="html"><![CDATA[<h1 id="堆栈"><a href="#堆栈" class="headerlink" title="堆栈"></a>堆栈</h1><ul>
 <li><p>管理方式: 栈由编译器自动管理；堆由程序员手动管理。</p>
@@ -62,7 +156,7 @@
 <li>将数据类型的确定、调用类别对象指定的方法由编译时，推迟到运行时。</li>
 <li>多态：不同对象以自己的方式响应相同的消息。</li>
 </ul>
-<h1 id="readwrite、readonly、-assign、-retain、-cop、nonatomic"><a href="#readwrite、readonly、-assign、-retain、-cop、nonatomic" class="headerlink" title="readwrite、readonly、 assign、 retain、 cop、nonatomic"></a>readwrite、readonly、 assign、 retain、 cop、nonatomic</h1><ul>
+<h1 id="readwrite、readonly、-assign、-retain、-copy、nonatomic"><a href="#readwrite、readonly、-assign、-retain、-copy、nonatomic" class="headerlink" title="readwrite、readonly、 assign、 retain、 copy、nonatomic"></a>readwrite、readonly、 assign、 retain、 copy、nonatomic</h1><ul>
 <li>readwrite：可读可写.要生成getter 和 setter 方法；</li>
 <li>readonly：只读。成getter方法。属性不可在类外修改。</li>
 <li>assign：赋值。用于基本数据类型的属性修饰。是一个property的默认属性。</li>
@@ -497,6 +591,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];</div></pre></td></tr></table></figure>
 <p>在运行阶段没有任何问题，但是当把应用传到TestFlight进行测试的时候发现，每次杀掉进程重新启动应用获取到的IDFA都是不一样的。当应用通过审核，上传到App Store时，又恢复正常。</p>
 <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">- (<span class="built_in">NSArray</span> *)deleteEvenNumberWithArray:(<span class="built_in">NSArray</span> *)array &#123;</div><div class="line">    <span class="built_in">NSMutableArray</span> *tempMutableArray = [<span class="built_in">NSMutableArray</span> arrayWithArray:array];</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; tempMutableArray.count; i++) &#123;</div><div class="line">        <span class="built_in">NSInteger</span> tempInteger = [tempMutableArray[i] integerValue];</div><div class="line">        <span class="keyword">if</span> (tempInteger % <span class="number">2</span> == <span class="number">0</span>) &#123;</div><div class="line">            [tempMutableArray removeObjectAtIndex:i];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> tempMutableArray.copy;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="button-相应事件"><a href="#button-相应事件" class="headerlink" title="button 相应事件"></a>button 相应事件</h2><p>在UIImageView 上添加一个 Button ， Button 不能相应事件。设置 <code>button.userInteractionEnabled = YES</code> 没用，必须设置<code>UIImageView.userInteractionEnabled = YES</code>，才可以。</p>
 ]]></content>
       
         <categories>
@@ -680,6 +775,75 @@
     </entry>
     
     <entry>
+      <title><![CDATA[SQL语句的简单使用]]></title>
+      <url>http://huntermz.site/2016/07/07/SQL%E8%AF%AD%E5%8F%A5%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/</url>
+      <content type="html"><![CDATA[<ul>
+<li>字段类型</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">integer: 整形值</div><div class="line">real: 浮点值</div><div class="line">text: 文本字符串</div><div class="line">blob: 二进制数据(比如文件)</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<ul>
+<li>创建表</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">create</span> <span class="keyword">table</span> 表名(字段名<span class="number">1</span> 字段类型， 字段名<span class="number">2</span> 字段类型， ...)</div></pre></td></tr></table></figure>
+<ul>
+<li>删表</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">drop</span> <span class="keyword">table</span> 表名 ;</div><div class="line"></div><div class="line"><span class="keyword">drop</span> <span class="keyword">table</span> <span class="keyword">if</span> <span class="keyword">exists</span> 表名 ;</div></pre></td></tr></table></figure>
+<ul>
+<li>插入数据 (insert)</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">insert</span> <span class="keyword">into</span> 表名 (字段<span class="number">1</span>, 字段<span class="number">2</span>, …) <span class="keyword">values</span> (字段<span class="number">1</span>的值, 字段<span class="number">2</span>的值, …) ;</div><div class="line"></div><div class="line"><span class="keyword">insert</span> <span class="keyword">into</span> test_table (<span class="keyword">name</span>, age) <span class="keyword">values</span> (‘mj’, <span class="number">10</span>) ;</div></pre></td></tr></table></figure>
+<ul>
+<li>更新数据</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">update</span> 表名 <span class="keyword">set</span> 字段<span class="number">1</span> = 字段<span class="number">1</span>的值, 字段<span class="number">2</span> = 字段<span class="number">2</span>的值, … ;</div><div class="line"></div><div class="line"><span class="keyword">update</span> test_table <span class="keyword">set</span> <span class="keyword">name</span> = ‘jack’, age = <span class="number">20</span> ;</div></pre></td></tr></table></figure>
+<ul>
+<li>删除数据</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">delete</span> <span class="keyword">from</span> 表名 ;</div><div class="line"></div><div class="line"><span class="keyword">delete</span> <span class="keyword">from</span> test_table ;  // 会删除test_table中的所有数据</div></pre></td></tr></table></figure>
+<ul>
+<li>条件语句</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">条件语句的常见格式:</div><div class="line"></div><div class="line">where 字段 = 某个值 ;   // 不能用两个 =</div><div class="line"></div><div class="line">where 字段 is 某个值 ;   // is 相当于 =</div><div class="line"></div><div class="line">where 字段 != 某个值 ;</div><div class="line"></div><div class="line">where 字段 is not 某个值 ;   // is not 相当于 !=</div><div class="line"></div><div class="line">where 字段 &gt; 某个值 ;</div><div class="line"></div><div class="line">where 字段1 = 某个值 and 字段2 &gt; 某个值 ;  // and相当于C语言中的 &amp;&amp;</div><div class="line"></div><div class="line">where 字段1 = 某个值 or 字段2 = 某个值 ;  //  or 相当于C语言中的 ||</div><div class="line"></div><div class="line">示例:</div><div class="line">update t_student set age = 5 where age &gt; 10 and name != ‘jack’ ;</div><div class="line"></div><div class="line">delete from t_student where age &lt;= 10 or age &gt; 30 ;</div></pre></td></tr></table></figure>
+<ul>
+<li>DQL语句</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">格式</div><div class="line"></div><div class="line"><span class="keyword">select</span> 字段<span class="number">1</span>, 字段<span class="number">2</span>, … <span class="keyword">from</span> 表名 ;</div><div class="line"></div><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> 表名;   //  查询所有的字段</div><div class="line"></div><div class="line"></div><div class="line">示例</div><div class="line"></div><div class="line"><span class="keyword">select</span> <span class="keyword">name</span>, age <span class="keyword">from</span> test_table ;</div><div class="line"></div><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> test_table ;</div><div class="line"></div><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> test_table <span class="keyword">where</span> age &gt; <span class="number">10</span> ;  //  条件查询</div></pre></td></tr></table></figure>
+<ul>
+<li>起别名</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">格式(字段和表都可以起别名)</div><div class="line"></div><div class="line"><span class="keyword">select</span> 字段<span class="number">1</span> 别名 , 字段<span class="number">2</span> 别名 , … <span class="keyword">from</span> 表名 别名 ;</div><div class="line"></div><div class="line"><span class="keyword">select</span> 字段<span class="number">1</span> 别名, 字段<span class="number">2</span> <span class="keyword">as</span> 别名, … <span class="keyword">from</span> 表名 <span class="keyword">as</span> 别名 ;</div><div class="line"></div><div class="line"><span class="keyword">select</span> 别名.字段<span class="number">1</span>, 别名.字段<span class="number">2</span>, … <span class="keyword">from</span> 表名 别名 ;</div><div class="line"></div><div class="line"></div><div class="line">示例</div><div class="line"></div><div class="line"><span class="keyword">select</span> <span class="keyword">name</span> myname, age myage <span class="keyword">from</span> test_table ;  // 给name起个叫做myname的别名，给age起个叫做myage的别名</div><div class="line"></div><div class="line"><span class="keyword">select</span> s.name, s.age <span class="keyword">from</span> test_table s ;  //给test_table表起个别名叫做s，利用s来引用表中的字段</div></pre></td></tr></table></figure>
+<ul>
+<li>查询表中某一记录的数量</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">格式</div><div class="line"></div><div class="line"><span class="keyword">select</span> <span class="keyword">count</span> (字段) <span class="keyword">from</span> 表名 ;</div><div class="line"></div><div class="line"><span class="keyword">select</span> <span class="keyword">count</span> ( * ) <span class="keyword">from</span> 表名 ;</div><div class="line"></div><div class="line"></div><div class="line">示例</div><div class="line"></div><div class="line"><span class="keyword">select</span> <span class="keyword">count</span> (age) <span class="keyword">from</span> test_table ;</div><div class="line"></div><div class="line"><span class="keyword">select</span> <span class="keyword">count</span> ( * ) <span class="keyword">from</span> test_table <span class="keyword">where</span> score &gt;= <span class="number">60</span>;</div></pre></td></tr></table></figure>
+<ul>
+<li>排序</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">查询出来的结果可以用order by进行排序</div><div class="line"></div><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> t_student <span class="keyword">order</span> <span class="keyword">by</span> 字段 ;</div><div class="line"></div><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> t_student <span class="keyword">order</span> <span class="keyword">by</span> age ;</div><div class="line"></div><div class="line"></div><div class="line">默认是按照升序排序（由小到大），也可以变为降序（由大到小）</div><div class="line"></div><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> t_student <span class="keyword">order</span> <span class="keyword">by</span> age <span class="keyword">desc</span> ;  //降序</div><div class="line"></div><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> t_student <span class="keyword">order</span> <span class="keyword">by</span> age <span class="keyword">asc</span> ;   // 升序（默认）</div><div class="line"></div><div class="line"></div><div class="line">也可以用多个字段进行排序</div><div class="line"></div><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> t_student <span class="keyword">order</span> <span class="keyword">by</span> age <span class="keyword">asc</span>, height <span class="keyword">desc</span> ;</div><div class="line"></div><div class="line">先按照年龄排序（升序），年龄相等就按照身高排序（降序）</div></pre></td></tr></table></figure>
+<ul>
+<li>使用limit</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">使用limit可以精确地控制查询结果的数量，比如每次只查询10条数据</div><div class="line"></div><div class="line">格式</div><div class="line"></div><div class="line">select * from 表名 limit 数值1, 数值2 ;  // 数值1表示从第几个数开始，数值2表示每次查询多少个</div><div class="line"></div><div class="line">示例</div><div class="line"></div><div class="line">select * from t_student limit 4, 8 ;</div><div class="line"></div><div class="line">可以理解为：跳过最前面4条语句，然后取8条记录</div><div class="line"></div><div class="line">limit常用来做分页查询，比如每页固定显示5条数据，那么应该这样取数据</div><div class="line"></div><div class="line">第1页：limit 0, 5</div><div class="line"></div><div class="line">第2页：limit 5, 5</div><div class="line"></div><div class="line">第3页：limit 10, 5</div><div class="line"></div><div class="line">…</div><div class="line"></div><div class="line">第n页：limit 5*(n-1), 5</div><div class="line"></div><div class="line">select * from t_student limit 7 ;这条语句的作用相当于select * from t_student limit 0, 7 ;表示取最前面的7条记录</div></pre></td></tr></table></figure>
+]]></content>
+      
+        <categories>
+            
+            <category> 编程基础 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 数据库 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[排序算法]]></title>
       <url>http://huntermz.site/2016/07/07/%E7%AE%97%E6%B3%95/</url>
       <content type="html"><![CDATA[<p>此文用来收录常见的排序算法</p>
@@ -780,75 +944,6 @@
         <tags>
             
             <tag> 多线程 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[SQL语句的简单使用]]></title>
-      <url>http://huntermz.site/2016/07/07/SQL%E8%AF%AD%E5%8F%A5%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/</url>
-      <content type="html"><![CDATA[<ul>
-<li>字段类型</li>
-</ul>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">integer: 整形值</div><div class="line">real: 浮点值</div><div class="line">text: 文本字符串</div><div class="line">blob: 二进制数据(比如文件)</div></pre></td></tr></table></figure>
-<a id="more"></a>
-<ul>
-<li>创建表</li>
-</ul>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">create</span> <span class="keyword">table</span> 表名(字段名<span class="number">1</span> 字段类型， 字段名<span class="number">2</span> 字段类型， ...)</div></pre></td></tr></table></figure>
-<ul>
-<li>删表</li>
-</ul>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">drop</span> <span class="keyword">table</span> 表名 ;</div><div class="line"></div><div class="line"><span class="keyword">drop</span> <span class="keyword">table</span> <span class="keyword">if</span> <span class="keyword">exists</span> 表名 ;</div></pre></td></tr></table></figure>
-<ul>
-<li>插入数据 (insert)</li>
-</ul>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">insert</span> <span class="keyword">into</span> 表名 (字段<span class="number">1</span>, 字段<span class="number">2</span>, …) <span class="keyword">values</span> (字段<span class="number">1</span>的值, 字段<span class="number">2</span>的值, …) ;</div><div class="line"></div><div class="line"><span class="keyword">insert</span> <span class="keyword">into</span> test_table (<span class="keyword">name</span>, age) <span class="keyword">values</span> (‘mj’, <span class="number">10</span>) ;</div></pre></td></tr></table></figure>
-<ul>
-<li>更新数据</li>
-</ul>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">update</span> 表名 <span class="keyword">set</span> 字段<span class="number">1</span> = 字段<span class="number">1</span>的值, 字段<span class="number">2</span> = 字段<span class="number">2</span>的值, … ;</div><div class="line"></div><div class="line"><span class="keyword">update</span> test_table <span class="keyword">set</span> <span class="keyword">name</span> = ‘jack’, age = <span class="number">20</span> ;</div></pre></td></tr></table></figure>
-<ul>
-<li>删除数据</li>
-</ul>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">delete</span> <span class="keyword">from</span> 表名 ;</div><div class="line"></div><div class="line"><span class="keyword">delete</span> <span class="keyword">from</span> test_table ;  // 会删除test_table中的所有数据</div></pre></td></tr></table></figure>
-<ul>
-<li>条件语句</li>
-</ul>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">条件语句的常见格式:</div><div class="line"></div><div class="line">where 字段 = 某个值 ;   // 不能用两个 =</div><div class="line"></div><div class="line">where 字段 is 某个值 ;   // is 相当于 =</div><div class="line"></div><div class="line">where 字段 != 某个值 ;</div><div class="line"></div><div class="line">where 字段 is not 某个值 ;   // is not 相当于 !=</div><div class="line"></div><div class="line">where 字段 &gt; 某个值 ;</div><div class="line"></div><div class="line">where 字段1 = 某个值 and 字段2 &gt; 某个值 ;  // and相当于C语言中的 &amp;&amp;</div><div class="line"></div><div class="line">where 字段1 = 某个值 or 字段2 = 某个值 ;  //  or 相当于C语言中的 ||</div><div class="line"></div><div class="line">示例:</div><div class="line">update t_student set age = 5 where age &gt; 10 and name != ‘jack’ ;</div><div class="line"></div><div class="line">delete from t_student where age &lt;= 10 or age &gt; 30 ;</div></pre></td></tr></table></figure>
-<ul>
-<li>DQL语句</li>
-</ul>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">格式</div><div class="line"></div><div class="line"><span class="keyword">select</span> 字段<span class="number">1</span>, 字段<span class="number">2</span>, … <span class="keyword">from</span> 表名 ;</div><div class="line"></div><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> 表名;   //  查询所有的字段</div><div class="line"></div><div class="line"></div><div class="line">示例</div><div class="line"></div><div class="line"><span class="keyword">select</span> <span class="keyword">name</span>, age <span class="keyword">from</span> test_table ;</div><div class="line"></div><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> test_table ;</div><div class="line"></div><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> test_table <span class="keyword">where</span> age &gt; <span class="number">10</span> ;  //  条件查询</div></pre></td></tr></table></figure>
-<ul>
-<li>起别名</li>
-</ul>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">格式(字段和表都可以起别名)</div><div class="line"></div><div class="line"><span class="keyword">select</span> 字段<span class="number">1</span> 别名 , 字段<span class="number">2</span> 别名 , … <span class="keyword">from</span> 表名 别名 ;</div><div class="line"></div><div class="line"><span class="keyword">select</span> 字段<span class="number">1</span> 别名, 字段<span class="number">2</span> <span class="keyword">as</span> 别名, … <span class="keyword">from</span> 表名 <span class="keyword">as</span> 别名 ;</div><div class="line"></div><div class="line"><span class="keyword">select</span> 别名.字段<span class="number">1</span>, 别名.字段<span class="number">2</span>, … <span class="keyword">from</span> 表名 别名 ;</div><div class="line"></div><div class="line"></div><div class="line">示例</div><div class="line"></div><div class="line"><span class="keyword">select</span> <span class="keyword">name</span> myname, age myage <span class="keyword">from</span> test_table ;  // 给name起个叫做myname的别名，给age起个叫做myage的别名</div><div class="line"></div><div class="line"><span class="keyword">select</span> s.name, s.age <span class="keyword">from</span> test_table s ;  //给test_table表起个别名叫做s，利用s来引用表中的字段</div></pre></td></tr></table></figure>
-<ul>
-<li>查询表中某一记录的数量</li>
-</ul>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">格式</div><div class="line"></div><div class="line"><span class="keyword">select</span> <span class="keyword">count</span> (字段) <span class="keyword">from</span> 表名 ;</div><div class="line"></div><div class="line"><span class="keyword">select</span> <span class="keyword">count</span> ( * ) <span class="keyword">from</span> 表名 ;</div><div class="line"></div><div class="line"></div><div class="line">示例</div><div class="line"></div><div class="line"><span class="keyword">select</span> <span class="keyword">count</span> (age) <span class="keyword">from</span> test_table ;</div><div class="line"></div><div class="line"><span class="keyword">select</span> <span class="keyword">count</span> ( * ) <span class="keyword">from</span> test_table <span class="keyword">where</span> score &gt;= <span class="number">60</span>;</div></pre></td></tr></table></figure>
-<ul>
-<li>排序</li>
-</ul>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">查询出来的结果可以用order by进行排序</div><div class="line"></div><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> t_student <span class="keyword">order</span> <span class="keyword">by</span> 字段 ;</div><div class="line"></div><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> t_student <span class="keyword">order</span> <span class="keyword">by</span> age ;</div><div class="line"></div><div class="line"></div><div class="line">默认是按照升序排序（由小到大），也可以变为降序（由大到小）</div><div class="line"></div><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> t_student <span class="keyword">order</span> <span class="keyword">by</span> age <span class="keyword">desc</span> ;  //降序</div><div class="line"></div><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> t_student <span class="keyword">order</span> <span class="keyword">by</span> age <span class="keyword">asc</span> ;   // 升序（默认）</div><div class="line"></div><div class="line"></div><div class="line">也可以用多个字段进行排序</div><div class="line"></div><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> t_student <span class="keyword">order</span> <span class="keyword">by</span> age <span class="keyword">asc</span>, height <span class="keyword">desc</span> ;</div><div class="line"></div><div class="line">先按照年龄排序（升序），年龄相等就按照身高排序（降序）</div></pre></td></tr></table></figure>
-<ul>
-<li>使用limit</li>
-</ul>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">使用limit可以精确地控制查询结果的数量，比如每次只查询10条数据</div><div class="line"></div><div class="line">格式</div><div class="line"></div><div class="line">select * from 表名 limit 数值1, 数值2 ;  // 数值1表示从第几个数开始，数值2表示每次查询多少个</div><div class="line"></div><div class="line">示例</div><div class="line"></div><div class="line">select * from t_student limit 4, 8 ;</div><div class="line"></div><div class="line">可以理解为：跳过最前面4条语句，然后取8条记录</div><div class="line"></div><div class="line">limit常用来做分页查询，比如每页固定显示5条数据，那么应该这样取数据</div><div class="line"></div><div class="line">第1页：limit 0, 5</div><div class="line"></div><div class="line">第2页：limit 5, 5</div><div class="line"></div><div class="line">第3页：limit 10, 5</div><div class="line"></div><div class="line">…</div><div class="line"></div><div class="line">第n页：limit 5*(n-1), 5</div><div class="line"></div><div class="line">select * from t_student limit 7 ;这条语句的作用相当于select * from t_student limit 0, 7 ;表示取最前面的7条记录</div></pre></td></tr></table></figure>
-]]></content>
-      
-        <categories>
-            
-            <category> 编程基础 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 数据库 </tag>
             
         </tags>
         

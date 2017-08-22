@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="iOS基础知识总结一"/>
+
+
+
+
+  <meta name="keywords" content="笔记, HunterMz's  Blog" />
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="HunterMz's  Blog">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.5.0" />
+
+
+
+<link rel="canonical" href="http://huntermz.site/2017/08/22/iOS基础知识总结二/"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.5.0" />
+
+
+
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+    <title> iOS基础知识总结一 - HunterMz's  Blog </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">HunterMz's  Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            Home
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            Archives
+          
+        </li>
+      </a>
+    
+      <a href="/tags">
+        <li class="mobile-menu-item">
+          
+          
+            Tags
+          
+        </li>
+      </a>
+    
+      <a href="/categories">
+        <li class="mobile-menu-item">
+          
+          
+            Categories
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">HunterMz's  Blog</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            
+            
+              标签
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/categories">
+            
+            
+              分类
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          iOS基础知识总结一
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2017-08-22
+        </span>
+        
+          <div class="post-category">
+            
+              <a href="/categories/iOS开发/">iOS开发</a>
+            
+          </div>
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#NSString-用-copy-和-strong-修饰的区别"><span class="toc-text">NSString 用 copy 和 strong 修饰的区别</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#NSArray、NSMutableArray、NSSet、NSMutableSet、NSDictionary、NSMutableDictionary"><span class="toc-text">NSArray、NSMutableArray、NSSet、NSMutableSet、NSDictionary、NSMutableDictionary</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#instancetype-和-id"><span class="toc-text">instancetype 和 id</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#野指针、内存泄露、僵尸对象、空指针"><span class="toc-text">野指针、内存泄露、僵尸对象、空指针</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#自动释放池是什么？如何工作？"><span class="toc-text">自动释放池是什么？如何工作？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#如何检查内存泄露"><span class="toc-text">如何检查内存泄露</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#内存缓存机制实现"><span class="toc-text">内存缓存机制实现</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#常见的内存引用场景"><span class="toc-text">常见的内存引用场景</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#KVO-的底层实现"><span class="toc-text">KVO 的底层实现</span></a></li></ol>
+    </div>
+  </div>
+
+
+    <div class="post-content">
+      
+        <h1 id="NSString-用-copy-和-strong-修饰的区别"><a href="#NSString-用-copy-和-strong-修饰的区别" class="headerlink" title="NSString 用 copy 和 strong 修饰的区别"></a>NSString 用 <code>copy</code> 和 <code>strong</code> 修饰的区别</h1><ul>
+<li>OC 中 NSString 为不可变字符串的时候，用 <code>copy</code> 和 <code>strong</code> 都是只分配一次内存。但是如果使用 <code>copy</code> ,需要判断字符串是否是不可变字符串，如果是不可变字符串，就不再分配空间，如果是可变字符串才分派空间。如果程序中用到 <code>NSString</code> 的地方特别多，每一次都要先进行判断就会耗费性能。用 <code>strong</code> 就不会判断，所以在类型已知的情况下，可以直接使用 <code>strong</code>。</li>
+</ul>
+<h1 id="NSArray、NSMutableArray、NSSet、NSMutableSet、NSDictionary、NSMutableDictionary"><a href="#NSArray、NSMutableArray、NSSet、NSMutableSet、NSDictionary、NSMutableDictionary" class="headerlink" title="NSArray、NSMutableArray、NSSet、NSMutableSet、NSDictionary、NSMutableDictionary"></a>NSArray、NSMutableArray、NSSet、NSMutableSet、NSDictionary、NSMutableDictionary</h1><ul>
+<li>特点<ul>
+<li>NSArray：<br>不可变数组，有序，只能存储对象类型，可通过索引直接访问元素，而且元素类型可以不一样，但是不能进行增、删、改操作；</li>
+<li>NSMutableArray:<br>可变数组，能进行增、删、改操作。通过索引查询值很快，但是插入、删除效率很低。</li>
+<li>NSSet：<br>不可变集合，确定、互异、无序。只能访问不能修改。</li>
+<li>NSMutableSet:<br>可变集合，可以对集合增、删、改操作。集合通过值查询很快，插入、删除操作极快。</li>
+<li>NSDictionary:<br>不可变字典，无序，每个key对应的值唯一，可以通过key取值；</li>
+<li>NSMutableDictionary:<br>可变字典，能对字典进行增、删、改操作。通过key查询、插入、删除值都很快。</li>
+</ul>
+</li>
+<li><p>应用场景</p>
+<ul>
+<li>数组用于处理一组有序的数据集，比如常用列表的 dataSource 要求有序，可通过索引直接访问，效率高。</li>
+<li>集合要求具有确定性、互异性、无序性，在开发中少用到。</li>
+<li><p>字典是键值对集合，操作字典效率高，时间复杂度为常量，但是值是无序的。</p>
+<a id="more"></a>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="instancetype-和-id"><a href="#instancetype-和-id" class="headerlink" title="instancetype 和 id"></a>instancetype 和 id</h1><ul>
+<li>都可以作为方法的返回类型。</li>
+<li><code>instancetype</code> 可以返回和方法所在类相同类型的对象，<code>id</code> 只能返回未知类型的对象。简单来说就是 <code>instancetype</code> 在编译期确定实例的类型，而 <code>id</code> 在运行时检查类型。</li>
+<li><code>instancetype</code> 只能作为返回值，不能像 <code>id</code> 那样作为参数。</li>
+</ul>
+<h1 id="野指针、内存泄露、僵尸对象、空指针"><a href="#野指针、内存泄露、僵尸对象、空指针" class="headerlink" title="野指针、内存泄露、僵尸对象、空指针"></a>野指针、内存泄露、僵尸对象、空指针</h1><ul>
+<li><p>野指针：指针变量没有进行初始化或者指向的空间已经被释放。</p>
+<ul>
+<li>使用野指针调用方法，会报异常，崩溃。</li>
+<li>通常在调用玩 <code>release</code> 方法后，把保存对象的地址清空，赋值为nil, OC 中没有空指针异常，所以 <code>[nil retain]</code> 调用方法是不会有异常。</li>
+</ul>
+</li>
+<li><p>内存泄露：</p>
+<ul>
+<li>如 <code>Person *person = [Person new]</code> （对象提前赋值nil, 或者清空），在栈区的 <code>person</code> 已经被释放了，而堆区new产生的对象还没有被释放，就会造成内存泄露。</li>
+<li>在MRC模式下，没有配对释放或者对象提前赋值nil导致release不起作用，会引起内存泄露。</li>
+</ul>
+</li>
+<li><p>僵尸对象：堆中已经被释放的对象。</p>
+</li>
+<li>空指针：指针赋值为空，nil。</li>
+</ul>
+<h1 id="自动释放池是什么？如何工作？"><a href="#自动释放池是什么？如何工作？" class="headerlink" title="自动释放池是什么？如何工作？"></a>自动释放池是什么？如何工作？</h1><ul>
+<li>自动释放池是用来存储多个对象类型的指针变量。</li>
+<li>存入自动释放池的对象在自动释放池被销毁时，会对池内对象全部做一次release操作。</li>
+<li>调用对象的 <code>autorelease</code> 方法可以把对象加入池中。</li>
+<li>自动释放池在当前的 <code>runloop</code> 迭代结束时释放。一旦监听到 <code>Runloop</code> 即将进入睡眠等待状态，就释放自动释放池。</li>
+<li>多次调用对象的 <code>autorelease</code> 会导致 <code>野指针异常</code>。</li>
+</ul>
+<h1 id="如何检查内存泄露"><a href="#如何检查内存泄露" class="headerlink" title="如何检查内存泄露"></a>如何检查内存泄露</h1><ul>
+<li>静态分析：analyze</li>
+<li>instruments 工具里有个leak可以动态分析，如果在 Block 中多次使用 weakSelf 的话，可以在 Block 中先使用 strongSelf，防止 Block 执行时 weakSelf 被意外释放。</li>
+</ul>
+<h1 id="内存缓存机制实现"><a href="#内存缓存机制实现" class="headerlink" title="内存缓存机制实现"></a>内存缓存机制实现</h1><ul>
+<li>FIFO：新数据插入FIFO队列的尾部；数据在FIFO队列中顺序移动，淘汰队列头部的数据。</li>
+<li>LRU：新数据插入链表头部；每当缓存数据命中，则将数据移到链表头部；当链表满的时候，将链表尾部的数据丢弃。</li>
+<li>LFU：新数据插入队列尾部；队列中的数据被访问后，引用计数增加，队列重新排序；当需要淘汰数据时，将已经排序的列表最后的数据块删除。</li>
+</ul>
+<h1 id="常见的内存引用场景"><a href="#常见的内存引用场景" class="headerlink" title="常见的内存引用场景"></a>常见的内存引用场景</h1><ul>
+<li>定时器：<code>NSTimer</code> 经常被作为某个类的成员变量，而 <code>NSTimer</code> 初始化时要指定 self 为 target ，容易造成循环引用 <code>self ——&gt;timer--&gt;self</code> 另外，若timer一直处于 validate 的状态，则其引用计数将始终大于 0， 因此在不再使用定时器以后，应该先调用 <code>invalidate</code> 方法。</li>
+<li>Block：Block 在 copy 时都会对Block内部用的对象进行强引用。<code>self--&gt;block--&gt;self</code> 或者 <code>self--&gt;block--_ivar(成员变量)</code>。</li>
+<li>代理：在声明 <code>delegate</code> 时，使用 weak.</li>
+</ul>
+<h1 id="KVO-的底层实现"><a href="#KVO-的底层实现" class="headerlink" title="KVO 的底层实现"></a>KVO 的底层实现</h1><ul>
+<li><p>KVO 基于 runtime 机制实现。</p>
+</li>
+<li><p>当一个对象(假设是 person 对象， person 是 MYPerson)的属性值发生改变时，系统会自动生成一个类(继承自 MYPerson) NSKVONotifying_MYPerson，在这个类的 <code>setAge</code> 方法里，调用<code>[self willChangeValueForKey:@&quot;age&quot;] 和 [self didChangeValueForKey:@&quot;age&quot;]</code>，而这两个方法内部会主动调用监听者内部的 <code>- (void)observeValueForKeyPath</code> 这个方法。</p>
+</li>
+<li><p>当添加监听者后，person类型由 MYPerson 被改变成 NSKVONotifying_MYPerson</p>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+      
+      
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/笔记/">笔记</a>
+            
+          </div>
+        
+        
+        
+  <nav class="post-nav">
+    
+    
+      <a class="next" href="/2017/08/16/iOS基础知识总结一/">
+        <span class="next-text nav-default">iOS基础知识总结一</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:hunter_mz@icloud.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+      
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2015 - 
+    
+    2017
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">HunterMz</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://huntermz.site/2017/08/22/iOS基础知识总结二/';
+        this.page.identifier = '2017/08/22/iOS基础知识总结二/';
+        this.page.title = 'iOS基础知识总结一';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//huntermz.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.5.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.5.0"></script>
+
+  </body>
+</html>
