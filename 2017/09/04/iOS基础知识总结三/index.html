@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="iOS基础知识总结三"/>
+
+
+
+
+  <meta name="keywords" content="笔记, HunterMz's  Blog" />
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="HunterMz's  Blog">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.5.0" />
+
+
+
+<link rel="canonical" href="http://huntermz.site/2017/09/04/iOS基础知识总结三/"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.5.0" />
+
+
+
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+    <title> iOS基础知识总结三 - HunterMz's  Blog </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">HunterMz's  Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            Home
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            Archives
+          
+        </li>
+      </a>
+    
+      <a href="/tags">
+        <li class="mobile-menu-item">
+          
+          
+            Tags
+          
+        </li>
+      </a>
+    
+      <a href="/categories">
+        <li class="mobile-menu-item">
+          
+          
+            Categories
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">HunterMz's  Blog</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            
+            
+              标签
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/categories">
+            
+            
+              分类
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          iOS基础知识总结三
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2017-09-04
+        </span>
+        
+          <div class="post-category">
+            
+              <a href="/categories/iOS开发/">iOS开发</a>
+            
+          </div>
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#viewDidLoad、viewWillDisappear、viewWillAppear等方法的执行顺序和作用"><span class="toc-text">viewDidLoad、viewWillDisappear、viewWillAppear等方法的执行顺序和作用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#APP-启动的过程"><span class="toc-text">APP 启动的过程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#试着-scrollView-的contentsize"><span class="toc-text">试着 scrollView 的contentsize</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#UIView、UIWindow、CALayer"><span class="toc-text">UIView、UIWindow、CALayer</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#frame-和-bounds-有什么不同"><span class="toc-text">frame 和 bounds 有什么不同</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#UITableView-的性能优化"><span class="toc-text">UITableView 的性能优化</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#layoutSubview-何时会被调用"><span class="toc-text">layoutSubview 何时会被调用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#应用的生命周期"><span class="toc-text">应用的生命周期</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#load-、initialize"><span class="toc-text">load 、initialize</span></a></li></ol>
+    </div>
+  </div>
+
+
+    <div class="post-content">
+      
+        <h1 id="viewDidLoad、viewWillDisappear、viewWillAppear等方法的执行顺序和作用"><a href="#viewDidLoad、viewWillDisappear、viewWillAppear等方法的执行顺序和作用" class="headerlink" title="viewDidLoad、viewWillDisappear、viewWillAppear等方法的执行顺序和作用"></a>viewDidLoad、viewWillDisappear、viewWillAppear等方法的执行顺序和作用</h1><ul>
+<li>viewWillAppear：视图即将可见时调用。默认情况下不执行任何操作。</li>
+<li>viewDidAppear：视图已完全过渡到屏幕上时调用。</li>
+<li>viewWillDisappear：视图被驳回后调用，覆盖或以其他方式隐藏。</li>
+<li>viewDidLoad：在视图加载后被调用，如果是通过代码创建的视图加载器，将会在loadView方法后被调用，如果是Nib视图输出，会在视图设置好之后被调用。</li>
+<li>alloc –&gt; init –&gt; loadView –&gt; viewDidLoad –&gt; viewWillAppear –&gt;     viewDidAppear –&gt; viewWillDisappear –&gt; viewDidDisappear –&gt; dealloc</li>
+</ul>
+<a id="more"></a>
+<h1 id="APP-启动的过程"><a href="#APP-启动的过程" class="headerlink" title="APP 启动的过程"></a>APP 启动的过程</h1><ul>
+<li>有 storyboard ：<ul>
+<li>main 函数</li>
+<li>UIApplicationMain<ul>
+<li>创建 UIApplication 对象</li>
+<li>创建 UIApplication 的 delegate 对象</li>
+</ul>
+</li>
+<li>根据 Info.plist 获得 Main.storyboard 的文件名，加载 Main.storyboard。<ul>
+<li>创建 UIWindow</li>
+<li>创建和设置 UIWindow 的 rootViewController</li>
+<li>显示窗口</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>无 storyboard：<ul>
+<li>main 函数</li>
+<li>UIApplicationMain<ul>
+<li>创建 UIApplication 对象</li>
+<li>创建 UIApplication 的 delegate 对象</li>
+</ul>
+</li>
+<li>delegate 对象开始处理系统事件<ul>
+<li>在 <code>application:didFinishLaunchingWithOptions:</code> 中创建 UIWindow</li>
+<li>创建和设置 UIWindow 的 rootViewController</li>
+<li>显示窗口</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="试着-scrollView-的contentsize"><a href="#试着-scrollView-的contentsize" class="headerlink" title="试着 scrollView 的contentsize"></a>试着 scrollView 的contentsize</h1><p>一般情况下可以在 viewDidLoad 中设置，但是在 autolayout 下，系统会在viewDidAppear 之前根据 subView 的constraint 重新计算 scrollView 的contenSize.</p>
+<p>解决办法：</p>
+<ul>
+<li>去除 autolayout 选项，自己手动设置 contentSize.</li>
+<li>使用 autolayout，要么自己设置完subView的constraint，然后让系统根据constraint自动计算出contentSize。要么就在 viewDidAppear 里面自己手动设置 contenSize.</li>
+</ul>
+<h1 id="UIView、UIWindow、CALayer"><a href="#UIView、UIWindow、CALayer" class="headerlink" title="UIView、UIWindow、CALayer"></a>UIView、UIWindow、CALayer</h1><ul>
+<li><p>UIView：属于 UIkit.framework 框架，负责渲染矩形区域的内容，为矩形区域添加动画，相应区域的触摸事件，布局和管理一个或多个子视图。</p>
+</li>
+<li><p>UIWindow：属于 UIkit.framework 框架，是一种特殊的 UIView，通常在一个程序中只会有一个 UIWindow，但可以手动创建多个 UIWindow，同时加到程序中。UIWindow的主要作用：</p>
+<ul>
+<li>作为容器，包含app所要显然的所有视图。</li>
+<li>传递触摸消息到程序中的 view 和 其他对象。</li>
+<li>与 UIViewController 协同工作，方便完成设备方向旋转的支持。</li>
+</ul>
+</li>
+<li><p>CALayer：属于 QuartzCore.framework，用来绘制内容，对内容进行动画处理依赖于UIView来进行显示，不能处理用户事件。</p>
+</li>
+<li>UIView 和 CALayer 是相互依赖的，UIView 依赖 CALayer 提供的内容，CALayer 依赖 UIView 的容器显示绘制的内容。</li>
+</ul>
+<h1 id="frame-和-bounds-有什么不同"><a href="#frame-和-bounds-有什么不同" class="headerlink" title="frame 和 bounds 有什么不同"></a>frame 和 bounds 有什么不同</h1><ul>
+<li>frame：该 view 在父 view 坐标系统中的位置和大小，参考点是父坐标系统。</li>
+<li>bounds：该 view 在本身坐标系中的位置和大小，参考点是本身坐标系统。</li>
+</ul>
+<h1 id="UITableView-的性能优化"><a href="#UITableView-的性能优化" class="headerlink" title="UITableView 的性能优化"></a>UITableView 的性能优化</h1><ul>
+<li>使用不透明视图。不透明视图可以提高渲染的速度。可以将cell及其子视图的 <code>opaque</code> 属性设置为 YES。</li>
+<li>不要重复创建不必要的cell，使用重用cell。</li>
+<li>不需要与用户交互时，使用 <code>CALayer</code>，将内容绘制到 <code>layer上</code>，然后对 cell 的 <code>contentView.layer</code> 调用 <code>addSublayer:</code> 方法。</li>
+<li>提前计算并缓存行高</li>
+<li>不要阻塞主线程。使用多线程，让子线程去请求网络。</li>
+<li>cell中的view尽量不要使用透明</li>
+<li>减少子视图的层级关系</li>
+</ul>
+<h1 id="layoutSubview-何时会被调用"><a href="#layoutSubview-何时会被调用" class="headerlink" title="layoutSubview 何时会被调用"></a>layoutSubview 何时会被调用</h1><ul>
+<li>初始化 init 方法不会触发。</li>
+<li>滚动UIScrollView 会触发。</li>
+<li>旋转屏幕触发。</li>
+<li>改变 view 的触发，前提是 frame 改变了。</li>
+<li>改变 UIView 的大小触发。</li>
+</ul>
+<h1 id="应用的生命周期"><a href="#应用的生命周期" class="headerlink" title="应用的生命周期"></a>应用的生命周期</h1><ul>
+<li><code>- (BOOL)application:(UIApplication )application willFinishLaunchingWithOptions: (NSDictionary )launchOptions</code>：告诉代理进程启动但还没有进入状态保存。</li>
+<li><code>- (BOOL)application:(UIApplication )application didFinishLaunchingWithOptions: (NSDictionary )launchOptions</code>：告诉代理，启动基本完成程序准备开始运行。</li>
+<li><code>- (void)applicationWillResignActive:(UIApplication *)application</code>：当应用程序将要进入非活动状态执行，此期间应用程序不接收消息或事件，比如来电话了。</li>
+<li><code>- (void)applicationDidBecomeActive:(UIApplication *)application</code>：当应用程序进入活动状态执行。</li>
+<li><code>- (void)applicationDidEnterBackground:(UIApplication *)application</code>：当程序被推送到后台的时候调用。所以要设置后台继续运行，则在这个函数里设置。</li>
+<li><code>- (void)applicationWillEnterForeground:(UIApplication *)application</code>：当程序从后台将要进入前台时调用。</li>
+<li><code>-(void)applicationWillTerminate:(UIApplication *)application</code>：当程序将要退出时调用，通常做一些保存数据和退出前的清理工作。</li>
+</ul>
+<h1 id="load-、initialize"><a href="#load-、initialize" class="headerlink" title="load 、initialize"></a>load 、initialize</h1><ul>
+<li><p>load：</p>
+<ul>
+<li>当类对象被引入项目时，runtime 会向每一个类对象发送 load  消息。</li>
+<li>load 方法会在每个类甚至分类被引入时调用一次，调用的顺序：父类优先于子类。</li>
+<li>load 方法不会被类自动继承</li>
+</ul>
+</li>
+<li><p>initialize:</p>
+<ul>
+<li>也是在第一次使用这个类的时候会调用这个方法。</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+      
+      
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/笔记/">笔记</a>
+            
+          </div>
+        
+        
+        
+  <nav class="post-nav">
+    
+    
+      <a class="next" href="/2017/08/22/iOS基础知识总结二/">
+        <span class="next-text nav-default">iOS基础知识总结二</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:hunter_mz@icloud.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+      
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2015 - 
+    
+    2017
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">HunterMz</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  <script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://huntermz.site/2017/09/04/iOS基础知识总结三/';
+        this.page.identifier = '2017/09/04/iOS基础知识总结三/';
+        this.page.title = 'iOS基础知识总结三';
+    };
+    (function() {
+    var d = document, s = d.createElement('script');
+
+    s.src = '//huntermz.disqus.com/embed.js';
+
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();  
+  </script>
+
+
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.5.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.5.0"></script>
+
+  </body>
+</html>

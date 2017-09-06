@@ -380,13 +380,16 @@
           <h1 id="RxSwift-学习笔记"><a href="#RxSwift-学习笔记" class="headerlink" title="RxSwift 学习笔记"></a>RxSwift 学习笔记</h1><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p><a href="https://github.com/HunterMz/RxSwiftDemo">项目Git链接</a><br>在 Rx 的世界中，最根本的部分是 <code>观察者模式（Observer pattern）</code> 和 <code>迭代器模式（Iterator pattern）</code> 的结合。这两者是相互作用的，在两种情况下的计算都是从生产者中取出的值。对于迭代器模式，只要他们是可用的，我们就可以获取值;对于观察者模式，我们是在生产者给所有具体的观察者发出通知后，从中获取数据去处理值。</p>
 <p><strong>观察者 + 迭代器 + 推送 = 可观测的（Observable）实体</strong></p>
 <p>RxSwift核心概念就是一个观察者(Observer)订阅一个可观察序列(Observable)。观察者对 Observable 发射的数据或数据序列作出响应。可观察序列分为三种：</p>
-<pre><code>* `.Next`: 序列的下一个元素
- * `.Complete`: 表示事件序列的完结。
-* `.Error`: 同样表示完结，但是代表异常导致的完结。
-</code></pre><p><strong>序列的冷热问题：</strong></p>
-<pre><code>* 冷：只有当有观察者订阅这个序列时，序列才发射值。可以保证即使有订阅者中途加入也可以收到完整的事件序列。
-* 热：序列创建时就开始发射值。这样如果后面有订阅者来的时候，就可能会错过一些事件。
-</code></pre>
+<ul>
+<li><code>.Next</code>: 序列的下一个元素</li>
+<li><code>.Complete</code>: 表示事件序列的完结。</li>
+<li><code>.Error</code>: 同样表示完结，但是代表异常导致的完结。</li>
+</ul>
+<p><strong>序列的冷热问题：</strong></p>
+<ul>
+<li>冷：只有当有观察者订阅这个序列时，序列才发射值。可以保证即使有订阅者中途加入也可以收到完整的事件序列。</li>
+<li>热：序列创建时就开始发射值。这样如果后面有订阅者来的时候，就可能会错过一些事件。</li>
+</ul>
           <div class="read-more">
             <a href="/2016/09/02/RxSwfit 笔记/" class="read-more-link">阅读更多</a>
           </div>
