@@ -189,18 +189,18 @@
     <header class="post-header">
       <h1 class="post-title">
         
-          <a class="post-link" href="/2016/07/07/算法/">排序算法</a>
+          <a class="post-link" href="/2016/07/21/Swift 自定义类型/">Swift——自定义类型</a>
         
       </h1>
 
       <div class="post-meta">
         <span class="post-time">
-          2016-07-07
+          2016-07-21
         </span>
         
           <div class="post-category">
             
-              <a href="/categories/编程基础/">编程基础</a>
+              <a href="/categories/iOS开发/">iOS开发</a>
             
           </div>
         
@@ -218,9 +218,21 @@
         
 
         
-          <p>此文用来收录常见的排序算法</p>
+          <h2 id="Hashable-协议"><a href="#Hashable-协议" class="headerlink" title="Hashable 协议"></a>Hashable 协议</h2><ul>
+<li><p>什么是Hashable(哈希值)？<br>  <code>Hashable</code> 常用于快速定位和查找（用于Set里面的对象和Dictionary里面的作为key的对象，都需要实现（Hashable）协议）被哈希的对象。</p>
+<blockquote>
+<p>计算机内部会维护一个HashTable的一个表（想象成数据库的表），表类似于键值对的形式存在，hashValue就作为键（类似于带有索引的一个没有唯一约束的一个字段，注：并非主键，因为一个hashValue可能对应多条记录（也就是多个对象）。再判断相等用Equatable）<br>原文链接：<a href="http://www.jianshu.com/p/5aa75cd5e13e">http://www.jianshu.com/p/5aa75cd5e13e</a></p>
+</blockquote>
+</li>
+<li><p>Swift 中的Hashable协议<br>  关于<code>Hashable</code> 协议，苹果官方文档中给出如下概述：</p>
+<blockquote>
+<p>A hash value, provided by a type’s hashValue property, is an integer that is the same for any two instances that compare equally. That is, for two instances a and b of the same type, if a == b then a.hashValue == b.hashValue. The reverse is not true: Two instances with equal hash values are not necessarily equal to each other.</p>
+</blockquote>
+<p>  可见通常我们可以通过比较两个类型的 <code>hash value</code> 来确定两个类型是否相等。</p>
+</li>
+</ul>
           <div class="read-more">
-            <a href="/2016/07/07/算法/" class="read-more-link">阅读更多</a>
+            <a href="/2016/07/21/Swift 自定义类型/" class="read-more-link">阅读更多</a>
           </div>
         
       
@@ -323,6 +335,55 @@
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">integer: 整形值</div><div class="line">real: 浮点值</div><div class="line">text: 文本字符串</div><div class="line">blob: 二进制数据(比如文件)</div></pre></td></tr></table></figure>
           <div class="read-more">
             <a href="/2016/07/07/SQL语句的简单使用/" class="read-more-link">阅读更多</a>
+          </div>
+        
+      
+    </div>
+
+    
+
+    
+
+  </article>
+
+    
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          <a class="post-link" href="/2016/07/07/算法/">排序算法</a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2016-07-07
+        </span>
+        
+          <div class="post-category">
+            
+              <a href="/categories/编程基础/">编程基础</a>
+            
+          </div>
+        
+      </div>
+    </header>
+
+    
+    
+
+    <div class="post-content">
+      
+        
+        
+          
+        
+
+        
+          <p>此文用来收录常见的排序算法</p>
+          <div class="read-more">
+            <a href="/2016/07/07/算法/" class="read-more-link">阅读更多</a>
           </div>
         
       
